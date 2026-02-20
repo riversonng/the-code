@@ -438,7 +438,32 @@ select {
   .month-title {
     font-size: 16px;
   }
+  /* ===== STORYS MOBILE ===== */
 
+  .flashback {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .favorites {
+    columns: 1 !important;
+  }
+
+  .bars-vertical,
+  .month-chart {
+    height: 120px;
+  }
 }
 </style>
 </head>
@@ -1064,3 +1089,4 @@ document.getElementById("clear").addEventListener("click",()=>{
 
 </body>
 </html>
+
