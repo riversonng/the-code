@@ -298,7 +298,7 @@ td {
 <header>
   <h1>Mapa de Gêneros</h1>
   <div class="header-buttons">
-    <button id="charts">📋</button>
+    <button id="index">📋</button>
     <button id="tables">📅</button>
     <button id="flashs">📖</button>
         <button id="form">↳↰</button>
@@ -588,7 +588,7 @@ if(primeiraTab && primeiroConteudo){
 
 });
 
-["charts","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","form"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
 
@@ -596,3 +596,4 @@ if(primeiraTab && primeiroConteudo){
 </script>
 </body>
 </html>
+
