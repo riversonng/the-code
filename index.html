@@ -472,7 +472,7 @@ select {
 <header>
   <h1>Gráficos de Leitura</h1>
   <div class="header-buttons">
-    <button id="charts">📋</button>
+    <button id="index">📋</button>
     <button id="tables">📅</button>
     <button id="flashs">📖</button>
         <button id="form">↳↰</button>
@@ -1065,7 +1065,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.body.className = localStorage.getItem("selectedTheme") || "theme-dark";
 });
 
-["charts","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","form"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
 
