@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Gráficos de Leitura</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+:root{
+  --bg:#f4f1f7;
+  --bg-light:#faf8fc;
+  --card:#ffffff;
+  --border:#e5e0eb;
+  --border-strong:#d6cfe0;
+  --text:#2d2a32;
+  --muted:#6b6478;
+  --accent:#6c4dc0a8;
+  --accent-soft:#f2e3ff;
+  --chip:#caf5ee;
+}
+
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Segoe UI,system-ui,sans-serif;
+}
+
+header {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--card);
+  border-radius: 0;                     /* sem cantos arredondados */
+  border-bottom: 2px solid var(--border-strong); /* linha inferior */
+  box-shadow: none;                     /* sem sombra */
+  max-width: 1100px;}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.header-buttons button:hover {
+  background: color-mix(in srgb, var(--accent) 80%, black);
+  transform: translateY(-2px);
+}
+.controls{
+  max-width:1100px;
+  margin:16px auto;
+  display:grid;
+  grid-template-columns:1fr repeat(6,auto);
+  gap:5px;
+}
+.controls input,
+.controls select,
+.controls button{
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-light);
+  cursor:pointer;
+  color:var(--text);
+}
+.controls button{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+}
+.stats{
+  max-width:1100px;
+  margin:24px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap: 14px;
+}
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  border-radius:12px;
+}
+.stat b{
+  font-size:14px;
+  font-weight:700;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  margin-bottom:6px;
+}
+.stat span{
+  font-size:14px;
+  color:var(--text);
+}
+
+/* GRID UNIFICADO PARA 2X2 */
+.charts-grid {
+  max-width: 1100px;       /* reduz largura total */
+  margin: 5px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* duas colunas fixas */
+  grid-template-rows: repeat(4, auto);   /* duas linhas */
+  gap: 10px;              /* aumenta o espaço entre os cards */
+}
+
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;          /* padding menor */
+  max-width: 250PX;       /* limite de largura para não ficar grande demais */
+}
+
+.chart-card h3 {
+  margin: 0 0 8px;
+  font-size: 14px;        /* título menor */
+  font-weight: 600;
+  color: var(--text);
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 3fr auto;
+  gap: 4px;
+  margin-bottom: 6px;
+  align-items: center;
+  font-size: 11px;        /* texto menor */
+}
+
+.chart-label {
+  color: var(--muted);
+  text-align: right;
+}
+
+.chart-bar-wrap {
+  height: 10px;           /* barra mais fina */
+  background: var(--chip);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.chart-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 5px;
+}
+
+.cards-grid{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 18px;
+  display:flex;
+  position:relative;
+}
+
+.title{
+  font-weight:600;
+  line-height:1.25;
+  padding-right:72px; /* espaço para os ícones */
+  display:-webkit-box;
+  overflow:hidden;
+}
+
+.author{
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+/* ===== BASE VISUAL PADRÃO ===== */
+.chip-date,
+.chip-pages,
+.chip-format,
+.chip-lang,
+.tag1,
+.tag2,
+.tag3 {
+  font-size: .75rem;
+  padding: 4px 8px;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 12px;
+}
+
+/* ================================================= */
+/* ================== CHIPS META =================== */
+/* ================================================= */
+
+/* MÊS / ANO */
+.chip-date {
+  background: #fdfac4;
+  color: #868361;
+  cursor: pointer;
+}
+
+.chip-date:hover {
+  background: color-mix(in srgb, #fffeea 70%, white);
+}
+
+/* PÁGINAS */
+.chip-pages {
+  background: #eef5ff;
+  color: #3b5ed7;
+}
+
+/* FORMATO (K / F) */
+.chip-format {
+  background: #f3e8ff;
+  color: #8b5cf6;
+  cursor: pointer;
+}
+
+.chip-format:hover {
+  background: #e9d5ff;
+}
+
+/* LINGUAGEM */
+.chip-lang {
+  background: #e6fffa;
+  color: #0f766e;
+  cursor: pointer;
+}
+
+.chip-lang:hover {
+  background: #ccfbf1;
+}
+
+
+/* ================================================= */
+/* ===================== TAGS ====================== */
+/* ================================================= */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.rating{
+  font-size:1.5rem;
+  color:#fcc31a;
+
+}
+.card > div:last-child{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.icon-chip.heart{
+  color: #ff5fa2;
+  position: absolute;
+  top:14px;
+  right:14px;
+}
+.meta-line{
+  font-size:.8rem;
+  color:var(--text);
+  display:flex;
+  gap:6px;
+}
+#cards{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.year-block{
+  display:flex;
+  flex-direction:column;
+}
+
+.year-title{
+  font-size:26px;
+  margin: 0px;
+  font-weight:600;
+  color:var(--accent);
+}
+
+.month-block{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.month-title{
+  font-size:18px;
+  font-weight:500;
+  color:var(--muted);
+}
+
+.month-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
+  gap:10px;
+}
+
+
+/* ===== SELECT ESTILIZADO ===== */
+select {
+  appearance: none;                /* remove estilo padrão do navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--card);  /* fundo branco dos cards */
+  color: var(--text);             /* cor do texto principal */
+  padding: 10px 40px 10px 12px;   /* espaço interno, deixa margem para ícone */
+  border: 2px solid var(--border-strong); /* borda suave */
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+/* Hover e foco */
+select:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent-soft);
+}
+
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
+
+/* Ícone de seta customizado */
+select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23354052' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .header-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .header-buttons button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* filtros empilhados */
+  .controls {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .controls input,
+  .controls select,
+  .controls button {
+    width: 100%;
+  }
+
+  /* stats mais compactos */
+  .stats {
+    padding: 0 16px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat {
+    padding: 12px;
+  }
+
+  /* gráficos em coluna única */
+  .charts-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .chart-card {
+    max-width: 100%;
+  }
+
+  /* cards ocupando largura total */
+  .month-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-grid {
+    padding: 0 16px;
+  }
+
+  .year-title {
+    font-size: 22px;
+  }
+
+  .month-title {
+    font-size: 16px;
+  }
+
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gráficos de Leitura</h1>
+  <div class="header-buttons">
+    <button id="charts">📋</button>
+    <button id="tables">📅</button>
+    <button id="flashs">📖</button>
+        <button id="form">↳↰</button>
+
+</header>
+
+<div class="controls">
+  <input id="q" type="search" placeholder="Buscar por título, autor, série ou tags...">
+  <select id="year"><option value="">Ano</option></select>
+  <select id="month"><option value="">Mês</option></select>
+  <select id="lang"><option value="">Linguagem</option></select>
+  <select id="format">
+    <option value="">Formato</option>
+    <option value="K">Kindle</option>
+    <option value="F">Físico</option>
+  </select>
+    <button id="saveStories">📸</button>
+      <button id="clear">↻</button>
+</div>
+
+<section class="stats" id="stats">
+  <div class="stat"><b>Total de livros</b><div id="stat-count">–</div></div>
+  <div class="stat"><b>Total de páginas</b><div id="stat-pages">–</div></div>
+  <div class="stat"><b>Nota média</b><div id="stat-rating">–</div></div>
+  <div class="stat"><b>Favoritos</b><div id="stat-fav">–</div></div>
+  <div class="stat"><b>Nota 5</b><div id="stat-5">–</div></div>
+  <div class="stat"><b>📱 Kindle</b><div>★ <span id="stat-maiorK">–</span></div><div>☆ <span id="stat-menorK">–</span></div></div>
+  <div class="stat"><b>📖 Físico</b><div>★ <span id="stat-maiorF">–</span></div><div>☆ <span id="stat-menorF">–</span></div></div>
+  <div class="stat"><b>Português (PT)</b><div>★ <span id="stat-maiorPT">–</span></div><div>☆ <span id="stat-menorPT">–</span></div></div>
+  <div class="stat"><b>Inglês (IN)</b><div>★ <span id="stat-maiorEN">–</span></div><div>☆ <span id="stat-menorEN">–</span></div></div>
+  <div class="stat"><b>Pags/Formato</b><div>📱 <span id="stat-mediaK">–</span></div><div>📖 <span id="stat-mediaF">–</span></div></div>
+</section>
+
+<div class="charts-grid">
+  <div class="chart-card"><h3>Livros por Ano</h3><div id="chart-livros-ano"></div></div>
+  <div class="chart-card"><h3>Livros por Mês</h3><div id="chart-livros-mes"></div></div>
+  <div class="chart-card"><h3>Média de Páginas/Ano</h3><div id="chart-paginas-ano"></div></div>
+  <div class="chart-card"><h3>Média de Notas/Ano</h3><div id="chart-notas-ano"></div></div>
+</div>
+
+<section class="cards-section">
+  <div id="cards" class="cards-grid"></div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+async function saveMonthAsStory(year, monthBlock, monthName) {
+
+  const filteredData = state.data.filter(
+    b => String(b.YEAR) === String(year) &&
+         String(b.MONTH).toLowerCase() === monthName.toLowerCase()
+  );
+
+const cards = Array.from(monthBlock.querySelectorAll(".card")).reverse();
+
+  const MAX_CARDS_PER_PAGE = 10; // ajuste se quiser
+  const totalPages = Math.ceil(cards.length / MAX_CARDS_PER_PAGE);
+
+  for (let page = 0; page < totalPages; page++) {
+
+    const story = document.createElement("div");
+    story.style.width = "1080px";
+    story.style.height = "1920px";
+    story.style.background = getComputedStyle(document.documentElement).getPropertyValue('--bg');
+    story.style.padding = "80px 60px";
+    story.style.boxSizing = "border-box";
+    story.style.display = "flex";
+    story.style.flexDirection = "column";
+    story.style.gap = "10px";
+    story.style.position = "absolute";
+    story.style.left = "-9999px";
+    story.style.top = "0";
+
+    // HEADER
+    const header = document.createElement("div");
+    header.innerHTML = `
+      <div style="font-size:50px; font-weight:800; color:var(--accent); margin-bottom:5px;">
+        ${monthName} ${year}
+      </div>
+      <div style="font-size:36px; color:var(--muted); margin-bottom:5px;">
+        Leituras do mês
+      </div>
+    `;
+    story.appendChild(header);
+
+    // -------- ESTATÍSTICAS --------
+    const totalBooks = filteredData.length;
+    const ratings = filteredData.map(b => Number(b.RATING) || 0).filter(r => r > 0);
+    const avgRating = ratings.length ? (ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(2) : 0;
+    const favorites = filteredData.filter(b => (b.FAV||"").toUpperCase() === "YES").length;
+    const rating5 = filteredData.filter(b => Number(b.RATING) === 5).length;
+    const kindle = filteredData.filter(b => (b.FORMAT||"").toUpperCase() === "K").length;
+    const fisico = filteredData.filter(b => (b.FORMAT||"").toUpperCase() === "F").length;
+    const pt = filteredData.filter(b => (b.LANGUAGE||"").toUpperCase() === "PT").length;
+    const inl = filteredData.filter(b => (b.LANGUAGE||"").toUpperCase() === "IN").length;
+
+const statsWrapper = document.createElement("div");
+statsWrapper.style.display = "flex";
+statsWrapper.style.justifyContent = "center";
+statsWrapper.style.width = "100%";
+
+const statsDiv = document.createElement("div");
+statsDiv.style.display = "grid";
+statsDiv.style.gridTemplateColumns = "repeat(3, 1fr)";
+statsDiv.style.gap = "20px";
+statsDiv.style.padding = "10px";
+statsDiv.style.background = "var(--bg-light)";
+statsDiv.style.borderRadius = "40px";
+statsDiv.style.width = "100%";
+statsDiv.style.maxWidth = "900px";
+statsDiv.style.textAlign = "center";
+statsDiv.style.boxShadow = "0 20px 60px rgba(0,0,0,0.05)";
+
+    const stats = [
+      {label:"Total de livros", value: totalBooks},
+      {label:"Total de páginas", value: filteredData.reduce((sum, b) => sum + (Number(b.PAGES) || 0), 0)},
+      {label:"Nota média", value: avgRating},
+      {label:"Nota 5", value: rating5},
+      {label:"Formato F/K", value: `${fisico} / ${kindle}`},
+      {label:"Idioma PT/IN", value: `${pt} / ${inl}`},
+    ];
+
+    stats.forEach(s => {
+const cardStat = document.createElement("div");
+cardStat.style.display = "flex";
+cardStat.style.flexDirection = "column";
+cardStat.style.alignItems = "center";
+cardStat.style.justifyContent = "center";
+cardStat.style.gap = "10px";
+
+const number = document.createElement("div");
+number.textContent = s.value;
+number.style.fontSize = "42px";
+number.style.fontWeight = "800";
+number.style.color = "var(--accent)";
+number.style.lineHeight = "1";
+
+const label = document.createElement("div");
+label.textContent = s.label;
+label.style.fontSize = "15px";
+label.style.fontWeight = "600";
+label.style.color = "var(--muted)";
+label.style.textTransform = "uppercase";
+
+      cardStat.appendChild(number);
+      cardStat.appendChild(label);
+      statsDiv.appendChild(cardStat);
+    });
+
+statsWrapper.appendChild(statsDiv);
+story.appendChild(statsWrapper);
+
+    // -------- MARCADOR 1/2 --------
+    if (totalPages > 1) {
+      const pageIndicator = document.createElement("div");
+      pageIndicator.textContent = `${page + 1}/${totalPages}`;
+      pageIndicator.style.position = "absolute";
+      pageIndicator.style.top = "40px";
+      pageIndicator.style.right = "60px";
+      pageIndicator.style.fontSize = "20px";
+      pageIndicator.style.fontWeight = "600";
+      pageIndicator.style.color = "var(--muted)";
+      story.appendChild(pageIndicator);
+    }
+
+    // -------- CARDS --------
+    const cardsContainer = document.createElement("div");
+    cardsContainer.style.display = "grid";
+    cardsContainer.style.gridTemplateColumns = "1fr 1fr";
+    cardsContainer.style.gap = "100px";
+
+    const start = page * MAX_CARDS_PER_PAGE;
+    const end = start + MAX_CARDS_PER_PAGE;
+    const pageCards = cards.slice(start, end);
+
+    pageCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.style.transform = "scale(1.4)";
+      clone.style.transformOrigin = "top left";
+      clone.style.width = card.offsetWidth + "px";
+      cardsContainer.appendChild(clone);
+    });
+
+    story.appendChild(cardsContainer);
+    document.body.appendChild(story);
+
+    const canvas = await html2canvas(story, { scale: 2, useCORS: true });
+
+    const link = document.createElement("a");
+    link.download = `${year}_${monthName}_${page+1}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+
+    story.remove();
+  }
+}
+
+async function saveAllMonthsAsStories() {
+
+  const yearSelected = state.year;
+  if (!yearSelected) {
+    alert("Selecione um ano primeiro.");
+    return;
+  }
+
+  const yearBlock = document.querySelector(".year-block");
+  if (!yearBlock) {
+    alert("Ano não encontrado.");
+    return;
+  }
+
+  const months = yearBlock.querySelectorAll(".month-block");
+
+  for (const monthBlock of months) {
+    const monthName = monthBlock.querySelector(".month-title").innerText;
+    await saveMonthAsStory(yearSelected, monthBlock, monthName);
+  }
+}
+
+document.getElementById("saveStories")
+  .addEventListener("click", saveAllMonthsAsStories);
+const mesesOrdem = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const state = { data: [], filtered: [], q:"", year:"", month:"", lang:"", format:"", };
+
+// Carregar dados
+fetch("./books.json")
+  .then(r => r.json())
+  .then(data => {
+    state.data = Array.isArray(data) ? data : [];
+    populateFilters(state.data);
+    applyFilters();
+  });
+
+
+
+// Funções utilitárias
+function normalize(s) {
+  return (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+function getTags(b) {
+  return [b.TAG1,b.TAG2,b.TAG3].filter(t=>t);
+}
+
+// Aplicar filtros
+function applyFilters() {
+  const qn = normalize(state.q);
+
+  state.filtered = state.data.filter(b => {
+    const tagsN = getTags(b).map(t=>normalize(t));
+    return (!qn ||
+      normalize(b.TITLE).includes(qn) ||
+      normalize(b.AUTHOR).includes(qn) ||
+      tagsN.some(t=>t.includes(qn)))
+      && (!state.year || String(b.YEAR) === String(state.year))
+      && (!state.month || String(b.MONTH) === String(state.month))
+      && (!state.lang || String(b.LANGUAGE) === String(state.lang))
+      && (!state.format || String(b.FORMAT) === String(state.format));
+  });
+
+const reversed = [...state.filtered].reverse();
+
+renderStats(reversed);
+renderCharts(reversed);
+renderCards(reversed);
+}
+
+// Renderizar estatísticas
+function renderStats(list) {
+  const setText = (id, val) => document.getElementById(id).textContent = val;
+  setText("stat-count", list.length);
+  setText("stat-pages", list.reduce((a,b)=>a+(+b.PAGES||0),0));
+  setText("stat-rating", (list.reduce((a,b)=>a+(+b.RATING||0),0)/(list.length||1)).toFixed(2));
+  setText("stat-fav", list.filter(b=>(b.FAV||"").toUpperCase()==="YES").length);
+  setText("stat-5", list.filter(b=>(+b.RATING)===5).length);
+
+  const formatStats = (arr) => {
+    const maior = arr.reduce((a,b)=>(+b.PAGES>(+a.PAGES||0)?b:a), {});
+    const menor = arr.reduce((a,b)=>(+b.PAGES<(+a.PAGES||Infinity)?b:a), {});
+    return {
+      maior: maior.TITLE ? `${maior.TITLE} (${maior.PAGES} pág)` : "–",
+      menor: menor.TITLE ? `${menor.TITLE} (${menor.PAGES} pág)` : "–",
+      media: arr.length ? (arr.reduce((a,b)=>a+(+b.PAGES||0),0)/arr.length).toFixed(1) : "–"
+    };
+  };
+
+  const kindle = formatStats(list.filter(b=>b.FORMAT==="K"));
+  const fisico = formatStats(list.filter(b=>b.FORMAT==="F"));
+  setText("stat-maiorK", kindle.maior); setText("stat-menorK", kindle.menor); setText("stat-mediaK", kindle.media);
+  setText("stat-maiorF", fisico.maior); setText("stat-menorF", fisico.menor); setText("stat-mediaF", fisico.media);
+
+  const ptStats = formatStats(list.filter(b=>String(b.LANGUAGE).toUpperCase()==="PT"));
+  const enStats = formatStats(list.filter(b=>String(b.LANGUAGE).toUpperCase()==="IN"));
+  setText("stat-maiorPT", ptStats.maior); setText("stat-menorPT", ptStats.menor);
+  setText("stat-maiorEN", enStats.maior); setText("stat-menorEN", enStats.menor);
+}
+
+// Agrupar e calcular média
+function groupBy(arr,key) {
+  return arr.reduce((acc,o)=>{
+    if(o[key]) acc[o[key]]=(acc[o[key]]||0)+1;
+    return acc;
+  },{});
+}
+function avgByYear(arr,key) {
+  const grouped = {};
+  arr.forEach(b=>{
+    if(b.YEAR) {
+      if(!grouped[b.YEAR]) grouped[b.YEAR] = [];
+      grouped[b.YEAR].push(+b[key]||0);
+    }
+  });
+  return Object.fromEntries(Object.entries(grouped).map(([y,v])=>[y,(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)]));
+}
+function sortByYear(entries) {
+  return entries.sort((a,b)=>Number(a[0]) - Number(b[0]));
+}
+
+function sortByMonth(entries) {
+  return entries.sort(
+    (a,b)=> mesesOrdem.indexOf(a[0]) - mesesOrdem.indexOf(b[0])
+  );
+}
+
+function renderBarChart(containerId, entries) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  const maxVal = Math.max(...entries.map(e=>+e[1]), 1);
+
+  entries.forEach(([label, value]) => {
+    const row = document.createElement("div");
+    row.className = "chart-row";
+
+    const lbl = document.createElement("div");
+    lbl.className = "chart-label";
+    lbl.textContent = label;
+
+    const barWrap = document.createElement("div");
+    barWrap.className = "chart-bar-wrap";
+
+    const bar = document.createElement("div");
+    bar.className = "chart-bar";
+    bar.style.width = ((+value / maxVal) * 100) + "%";
+
+    barWrap.appendChild(bar);
+
+    const val = document.createElement("div");
+    val.className = "chart-val";
+    val.textContent = Number(value).toFixed(
+      Number.isInteger(+value) ? 0 : 1
+    );
+
+    row.appendChild(lbl);
+    row.appendChild(barWrap);
+    row.appendChild(val);
+
+    container.appendChild(row);
+  });
+}
+
+function renderCharts(list) {
+  renderBarChart(
+    "chart-livros-ano",
+    sortByYear(Object.entries(groupBy(list,"YEAR")))
+  );
+
+  renderBarChart(
+    "chart-livros-mes",
+    sortByMonth(Object.entries(groupBy(list,"MONTH")))
+  );
+
+  renderBarChart(
+    "chart-paginas-ano",
+    sortByYear(Object.entries(avgByYear(list,"PAGES")))
+  );
+
+  renderBarChart(
+    "chart-notas-ano",
+    sortByYear(Object.entries(avgByYear(list,"RATING")))
+  );
+}
+
+
+function shortMonth(m){
+  return m ? m.slice(0,3) : "";
+}
+// =====================================================
+// CORES FIXAS PARA TAG1 (GÊNERO PRINCIPAL)
+// =====================================================
+const coresTag1 = {
+  "Romance": "#E75480",
+  "Drama": "#9333EA",
+  "Fantasia": "#3B82F6",
+  "Mistério": "#0F172A",
+  "Suspense": "#DC2626",
+  "Terror": "#111827",
+  "SciFi": "#06B6D4",
+  "Distopia": "#475569",
+  "Histórico": "#F59E0B",
+  "Biografia": "#FEF3C7",
+  "Não Ficção": "#6B7280",
+  "Graphic Novel": "#10B981",
+  "Mangá": "#F97316",
+  "Ficção de Cura": "#E9D5FF"
+};
+
+// =====================================================
+// CORES DINÂMICAS PARA TAG2 (SUBGÊNERO)
+// =====================================================
+const coresTag2 = {};
+
+function gerarCorDeterministica(texto){
+  let hash = 0;
+  for(let i=0;i<texto.length;i++){
+    hash = texto.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const cor = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+  return "#" + "00000".substring(0, 6 - cor.length) + cor + "AA";
+}
+
+function corParaTag2(tag2){
+  if(!tag2) return null;
+  if(!coresTag2[tag2]){
+    coresTag2[tag2] = gerarCorDeterministica(tag2);
+  }
+  return coresTag2[tag2];
+}
+
+function cardHTML(b) {
+  const tags = [b.TAG1, b.TAG2, b.TAG3].filter(Boolean);
+  const fav = (b.FAV || "").toUpperCase() === "YES";
+  const rating = Number(b.RATING) || 0;
+  const ratingStars = "★".repeat(Math.floor(rating));
+
+  const formatIcon = b.FORMAT === "K" ? "K" : b.FORMAT === "F" ? "F" : "";
+  const langIcon = b.LANGUAGE === "PT" ? "PT" : b.LANGUAGE === "IN" ? "IN" : "";
+
+  return `
+  <article class="card">
+    <div class="card-icons">
+      ${fav ? `<span class="icon-chip heart" onclick="searchByField('fav','YES')">❤︎</span>` : ``}
+    </div>
+
+    <div class="card-text">
+      <div class="author">${b.SERIES}</div>
+      <div class="title">${b.TITLE}</div>
+      <div class="author">${b.AUTHOR}</div>
+      <div class="rating">${ratingStars}</div>
+
+      <div class="meta-line">
+        ${b.MONTH && b.YEAR 
+          ? `<span class="chip-date" onclick="searchByField('month','${b.MONTH}')">
+               ${shortMonth(b.MONTH)}/${b.YEAR}
+             </span>` 
+          : ``}
+
+        ${b.PAGES 
+          ? `<span class="chip-pages">
+               ${b.PAGES} pág.
+             </span>` 
+          : ``}
+
+        ${b.FORMAT 
+          ? `<span class="chip-format" onclick="searchByField('format','${b.FORMAT}')">
+               ${formatIcon}
+             </span>` 
+          : ``}
+
+        ${b.LANGUAGE 
+          ? `<span class="chip-lang" onclick="searchByField('lang','${b.LANGUAGE}')">
+               ${langIcon}
+             </span>` 
+          : ``}
+      </div>
+
+      ${
+        tags && tags.length
+          ? `<div class="tags">
+               ${tags
+                 .map((t, i) => {
+                   let cor = "";
+                   if(i === 0) cor = coresTag1[t] || "#888";        // TAG1 fixa
+                   else if(i === 1) cor = corParaTag2(t) || "#AAA"; // TAG2 dinâmica
+                   else cor = "#CCC";                                // TAG3 neutra
+
+                   return `
+                     <span 
+                       class="tag${i+1}" 
+                       style="background-color:${cor}; color:white;" 
+                       onclick="searchByTag('${t}')" 
+                       title="Buscar por ${t}">
+                       ${t}
+                     </span>`;
+                 }).join("")}
+             </div>`
+          : ``
+      }
+
+    </div>
+  </article>
+  `;
+}
+
+
+function renderCards(list) {
+  const container=document.getElementById("cards");
+  container.innerHTML="";
+  const grouped=groupByYearMonth(list);
+  Object.keys(grouped).sort((a,b)=>b-a).forEach(year=>{
+    const yearBlock=document.createElement("section");
+    yearBlock.className="year-block";
+    yearBlock.innerHTML=`<h2 class="year-title">${year}</h2>`;
+    Object.keys(grouped[year])
+      .sort((a,b)=>mesesOrdem.indexOf(b)-mesesOrdem.indexOf(a))
+      .forEach(month=>{
+        const monthBlock=document.createElement("div");
+        monthBlock.className="month-block";
+        monthBlock.innerHTML=`<h3 class="month-title">${month}</h3>`;
+        const grid=document.createElement("div");
+        grid.className="month-cards";
+        grouped[year][month].forEach(b=>{
+          grid.insertAdjacentHTML("beforeend",cardHTML(b));
+        });
+        monthBlock.appendChild(grid);
+        yearBlock.appendChild(monthBlock);
+      });
+    container.appendChild(yearBlock);
+  });
+}
+function searchByTag(tag) {
+  state.q = tag; // define a busca pelo texto da tag
+  document.getElementById("q").value = tag; // atualiza o campo de busca
+  applyFilters(); // aplica os filtros normalmente
+}
+function searchByField(field, value) {
+  // limpa busca textual
+  state.q = "";
+  document.getElementById("q").value = "";
+
+  // define apenas o filtro clicado
+  ["year","month","lang","format"].forEach(f => {
+    state[f] = "";
+    document.getElementById(f).value = "";
+  });
+
+  state[field] = value;
+  document.getElementById(field).value = value;
+
+  applyFilters();
+}
+
+function groupByYearMonth(list){
+  const map = {};
+  list.forEach(b=>{
+    if(!b.YEAR || !b.MONTH) return;
+    if(!map[b.YEAR]) map[b.YEAR] = {};
+    if(!map[b.YEAR][b.MONTH]) map[b.YEAR][b.MONTH] = [];
+    map[b.YEAR][b.MONTH].push(b);
+  });
+  return map;
+}
+// Popular filtros
+function populateFilters(data){
+  const yearSel=document.getElementById("year");
+  const monthSel=document.getElementById("month");
+  const langSel=document.getElementById("lang");
+
+  [...new Set(data.map(d=>d.YEAR))].filter(Boolean).sort((a,b)=>a-b).forEach(y=>{
+    const opt=document.createElement("option"); opt.value=y; opt.textContent=y; yearSel.appendChild(opt);
+  });
+
+  mesesOrdem.forEach(m=>{
+    const opt=document.createElement("option"); opt.value=m; opt.textContent=m; monthSel.appendChild(opt);
+  });
+
+  [...new Set(data.map(d=>String(d.LANGUAGE).toUpperCase()))].filter(Boolean).sort().forEach(l=>{
+    const opt=document.createElement("option"); opt.value=l; opt.textContent=l; langSel.appendChild(opt);
+  });
+}
+
+["year","month"].forEach(id=>{
+  document.getElementById(id).addEventListener("change",e=>{
+    state[id]=e.target.value;
+    applyFilters();
+  });
+});
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.body.className = localStorage.getItem("selectedTheme") || "theme-dark";
+});
+
+["charts","flashs","tables","form"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
+});
+
+// Eventos filtros
+["q","year","month","lang","format"].forEach(id=>{
+  const ev = (id==="q") ? "input" : "change";
+  document.getElementById(id).addEventListener(ev, e=>{
+    state[id] = e.target.value;
+    applyFilters();
+  });
+});
+document.getElementById("clear").addEventListener("click",()=>{
+  ["q","year","month","lang","format"].forEach(id=>{
+    state[id]="";
+    document.getElementById(id).value="";
+  });
+  applyFilters();
+});
+</script>
+
+
+</body>
+</html>

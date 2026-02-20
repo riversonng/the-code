@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Card do mês</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#f4f1f7;
+  --bg-light:#faf8fc;
+  --card:#ffffff;
+  --border:#e5e0eb;
+  --border-strong:#d6cfe0;
+  --text:#2d2a32;
+  --muted:#6b6478;
+  --accent:#7acada;
+  --accent-soft:#99c1c9;
+  --chip:#f3edf7}
+
+/* PALETAS POR ANO */
+.year-2026{--accent:#ff5fa2;--accent-soft:#ffe3ef;--chip:#f3edf7}
+.year-2025{--accent:#7b3fe4;--accent-soft:#eee7fb;--chip:#efeaf4}
+.year-2024{--accent:#3fa58c;--accent-soft:#e1f3ee;--chip:#edf3f0}
+.year-2023{--accent:#4f6df5;--accent-soft:#e6ebff;--chip:#edf0f7}
+.year-2022{--accent:#ff8a3d;--accent-soft:#ffe8d6;--chip:#f6ede6}
+.year-2021{--accent:#9b3a4d;--accent-soft:#f3dde3;--chip:#f2e9ec}
+.year-2020{--accent:#2f7d7a;--accent-soft:#e0f2f1;--chip:#e7f3f2;
+}
+
+.flashback-block{
+  background: var(--bg);
+  padding: 24px;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Segoe UI,system-ui,sans-serif;
+}
+header {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--card);
+  border-radius: 0;                     /* sem cantos arredondados */
+  border-bottom: 2px solid var(--border-strong); /* linha inferior */
+  box-shadow: none;                     /* sem sombra */
+  max-width: 1100px;}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.header-buttons button:hover {
+  background: color-mix(in srgb, var(--accent) 80%, black);
+  transform: translateY(-2px);
+}
+
+/* ===== SELECT ESTILIZADO ===== */
+#monthSelect, #yearSelect {
+  appearance: none;                /* remove estilo padrão do navegador */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--card);  /* fundo branco dos cards */
+  color: var(--text);             /* cor do texto principal */
+  padding: 10px 40px 10px 12px;   /* espaço interno, deixa margem para ícone */
+  border: 2px solid var(--border-strong); /* borda suave */
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+/* Hover e foco */
+#monthSelect, #yearSelect:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent-soft);
+}
+
+#monthSelect, #yearSelect:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
+
+/* Ícone de seta customizado */
+#monthSelect, #yearSelect {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23354052' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+.flashback{
+  max-width:1100px;
+  margin:32px auto;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+}
+.flashback.grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:16px;
+}
+.span-2{grid-column:span 2}
+.card .val.list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.card .val.list div{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  color:var(--text);
+}
+.card .val.list span{
+  color:var(--muted);
+  font-size:13px;
+}
+.card{
+  background:var(--bg-light);
+  border:1px solid var(--border);
+  border-radius: 25px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  gap:6px;
+}
+
+.card.ano{grid-column:span 2}
+.card.total{grid-column:span 2}
+.card.pgs{grid-column:span 2}
+.card.media{grid-column:span 1}
+.card.nota{grid-column:span 1}
+.card.fav {grid-column:span 1}
+.card.maiormenor {grid-column:span 2}
+.card.med {grid-column:span 1}
+.card.generos{grid-column:span 2}
+.card.genero-metricas {grid-column:span 2}
+.card.subgen{grid-column:span 2}
+.card.barras {padding: 2px;}
+.card.greatest{grid-column:span 6}
+
+.label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.number{
+  font-size:42px;
+  font-weight:700;
+  color:var(--accent);
+  line-height:1;
+}
+
+.val{font-size:14px;color:var(--text)}
+small{font-size:13px;color:var(--muted)}
+
+.card.barras{padding:14px}
+.barra-container{width:100%;height:28px;display:flex;overflow:hidden;border-radius:8px}
+.barra{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.8rem;
+  color:var(--text);
+  white-space:nowrap;
+}
+.barra.k,.barra.pt{background:var(--accent)}
+.barra.f,.barra.in{background:var(--accent-soft)}
+
+/* container das tags */
+.treemap{
+  display:flex;
+  flex-wrap:wrap;      /* permite quebrar linha ENTRE as tags */
+  gap:8px;
+}
+.genre span {
+  color: var(--accent);   /* usa a cor definida no tema */
+  font-weight: bold;      /* deixa em negrito */
+}
+
+.favorites{
+  width:100%;
+  columns:4;
+  column-gap:10px;
+}
+.favorites div{
+  break-inside:avoid;
+  font-size:.8rem;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.card.ano {background-color: var(--accent-soft);}
+
+/* ====== GRÁFICO LEITURAS / MÊS ====== */ 
+.month-chart { width: 100%; 
+  display: grid; 
+  grid-template-columns: repeat(12, 1fr); 
+  gap: 6px; align-items: end; height: 160px; 
+  margin-top: 10px; } 
+.month-bar { background: var(--accent); 
+    border-radius: 6px 6px 0 0; 
+    display: flex; align-items: flex-end; 
+    justify-content: center; font-size: .65rem; 
+    color: var(--bg); padding-bottom: 4px; } 
+.month-labels { display: grid; 
+      grid-template-columns: repeat(12, 1fr); 
+      gap: 6px; margin-top: 4px; 
+      font-size: .8rem; text-align: center; 
+      opacity: .9; } 
+.bars-vertical { width: 100%; height: 160px; display: flex; align-items: flex-end; gap: 6px; margin-top: 10px; } 
+.bars-vertical .col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; } 
+.bars-vertical .bar { width: 100%; padding: 0; margin: 0; background: var(--accent); border-radius: 6px 6px 0 0; box-sizing: border-box; } 
+.bars-vertical .col span { margin-top: 4px; font-size: .65rem; opacity: .75; text-align: center; } 
+.bars-vertical .bar { background: var(--accent); } 
+.bars-vertical .col:nth-child(1) .bar { filter: brightness(0.7); } 
+.bars-vertical .col:nth-child(2) .bar { filter: brightness(0.8); } 
+.bars-vertical .col:nth-child(3) .bar { filter: brightness(0.9); } 
+.bars-vertical .col:nth-child(4) .bar { filter: brightness(1); } 
+.bars-vertical .col:nth-child(5) .bar { filter: brightness(1.1); } 
+.bars-vertical .col:nth-child(6) .bar { filter: brightness(1.2); } 
+.bars-vertical .col:nth-child(7) .bar { filter: brightness(1.3); } 
+.bars-vertical .col:nth-child(8) .bar { filter: brightness(1.4); } 
+.bars-vertical .col:nth-child(9) .bar { filter: brightness(1.5); } 
+.bars-vertical .col:nth-child(10) .bar { filter: brightness(1.6); } 
+.bars-vertical .col:nth-child(11) .bar { filter: brightness(1.7); } 
+.bars-vertical .col:nth-child(12) .bar { filter: brightness(1.8); }
+
+
+.genre,.genero-metricas{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+
+.genre,.genero-metricas .lista{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:8px;
+}
+
+.genre,.genero-metricas .item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 8px;
+  border-radius: 25px;
+  background:var(--chip);
+  font-size:12px;
+}
+
+.genre,.genero-metricas .nome{
+  color:var(--text);
+}
+
+.genero-metricas .valor{
+  color:var(--accent);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+
+
+
+@media(max-width:900px){
+  .flashback{grid-template-columns:repeat(2,1fr)}
+  .card{grid-column:span 2}
+  .favorites{columns:1}
+}
+
+/* ===== MOBILE EXTRA (celulares menores) ===== */
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .header-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .header-buttons button,
+  #monthSelect,
+  #yearSelect {
+    flex: 1;
+    width: 100%;
+  }
+
+  /* grid principal vira 1 coluna */
+  .flashback {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .card,
+  .card.ano,
+  .card.total,
+  .card.pgs,
+  .card.media,
+  .card.nota,
+  .card.fav,
+  .card.maiormenor,
+  .card.med,
+  .card.generos,
+  .card.genero-metricas,
+  .card.subgen,
+  .card.greatest {
+    grid-column: span 1 !important;
+  }
+
+  .number {
+    font-size: 32px;
+  }
+
+  .favorites {
+    columns: 1;
+  }
+
+  /* gráficos mais compactos */
+  .bars-vertical {
+    height: 120px;
+  }
+
+  .month-chart {
+    height: 120px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Cards</h1>
+<div class="header-buttons">
+
+  <select id="yearSelect">
+  <option value="2026">2026</option>
+  <option value="2025">2025</option>
+  <option value="2024">2024</option>
+  <option value="2023">2023</option>
+  <option value="2022">2022</option>
+  <option value="2021">2021</option>
+  <option value="2020">2020</option>
+</select>
+
+<select id="monthSelect">
+  <option value="">-- Mês --</option>
+  <option value="Janeiro">Janeiro</option>
+  <option value="Fevereiro">Fevereiro</option>
+  <option value="Março">Março</option>
+  <option value="Abril">Abril</option>
+  <option value="Maio">Maio</option>
+  <option value="Junho">Junho</option>
+  <option value="Julho">Julho</option>
+  <option value="Agosto">Agosto</option>
+  <option value="Setembro">Setembro</option>
+  <option value="Outubro">Outubro</option>
+  <option value="Novembro">Novembro</option>
+  <option value="Dezembro">Dezembro</option>
+</select>
+  <button id="resetBtn">🔄</button>
+  <button id="saveStoryBtn">📸</button>
+  
+</div>
+  <div class="header-buttons">
+    <button id="charts">📋</button>
+    <button id="tables">📅</button>
+    <button id="flashs">📖</button>
+    <button id="form">↳↰</button>
+
+  </div>
+</header>
+
+<section id="flashback-container"></section>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+const fmt = n => (n || 0).toLocaleString("pt-BR");
+
+let currentView = { type: "year", year: null, month: null };
+
+function saveAsStory(filenameKey, selectorKey) {
+  const block = document.querySelector(selectorKey);
+  if (!block) return alert("Bloco não encontrado!");
+  
+  const clone = block.cloneNode(true);
+  clone.style.position = "absolute";
+  clone.style.left = "-9999px";
+  clone.style.top = "-9999px";
+  clone.style.width = "auto";
+  clone.style.height = "auto";
+  clone.style.display = "block";
+  clone.style.padding = "24px";
+  clone.style.background = "var(--bg)";
+  document.body.appendChild(clone);
+
+  const originalWidth = clone.scrollWidth;
+  const originalHeight = clone.scrollHeight;
+
+  const targetWidth = 1080;
+  const targetHeight = 1920;
+
+  const scale = Math.min(
+    targetWidth / originalWidth,
+    targetHeight / originalHeight
+  );
+
+  html2canvas(clone, {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+
+    const link = document.createElement("a");
+    link.download = `flashback_${filenameKey}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+
+    document.body.removeChild(clone);
+  });
+}
+
+document.getElementById("saveStoryBtn").onclick = () => {
+
+  const block = document.querySelector(".flashback-block");
+  if (!block) {
+    alert("Bloco não encontrado!");
+    return;
+  }
+
+  const year = document.getElementById("yearSelect").value;
+  const month = document.getElementById("monthSelect").value;
+  const filename = month ? `${year}-${month}` : year;
+
+  saveAsStory(filename, ".flashback-block");
+};
+
+// Carregar livros
+fetch("./books.json")
+  .then(r => r.json())
+  .then(data => {
+    window.allBooks = data;
+    renderAnnualFlashback(data);
+
+    document.getElementById("yearSelect").onchange = () => {
+      const year = document.getElementById("yearSelect").value;
+      document.getElementById("monthSelect").value = "";
+      renderAnnualFlashback(window.allBooks, year);
+    };
+
+    document.getElementById("monthSelect").onchange = () => {
+      const year = document.getElementById("yearSelect").value;
+      const month = document.getElementById("monthSelect").value;
+      if (month) {
+        renderMonthlyFlashback(window.allBooks, year, month);
+      } else {
+        renderAnnualFlashback(window.allBooks, year);
+      }
+    };
+  })
+  .catch(() => {
+    document.getElementById("flashback-container").innerHTML = "<p>Erro ao carregar dados.</p>";
+  });
+
+// --- RENDER ANUAL ---
+function renderAnnualFlashback(list, selectedYear = null) {
+  const uniqueBooks = Object.values(list.reduce((acc, b) => {
+    const key = `${b.TITLE}-${b.YEAR}`;
+    if (!acc[key]) acc[key] = b;
+    return acc;
+  }, {}));
+
+  const grouped = {};
+  uniqueBooks.forEach(b => {
+    if (!grouped[b.YEAR]) grouped[b.YEAR] = [];
+    grouped[b.YEAR].push(b);
+  });
+
+  const anos = [2026, 2025, 2024, 2023, 2022, 2021, 2020];
+  const container = document.getElementById("flashback-container");
+  container.innerHTML = "";
+
+anos.forEach(year => {
+
+  if (selectedYear && String(year) !== String(selectedYear)) return;
+  if (!grouped[year]) return;
+
+    const books = grouped[year];
+
+    const total = books.length;
+    const pages = books.reduce((s, b) => s + (b.PAGES || 0), 0);
+    const avg = (books.reduce((s, b) => s + (b.RATING || 0), 0) / total || 0).toFixed(2);
+    const favs = books.filter(b => b.FAV === "YES").length;
+    const nota5 = books.filter(b => b.RATING === 5).length;
+
+    const maior = books.reduce((a,b)=> (b.PAGES||0)>(a.PAGES||0)?b:a, books[0]);
+    const menor = books.reduce((a,b)=> (b.PAGES||0)<(a.PAGES||0)?b:a, books[0]);
+
+    const qtdK = books.filter(b => b.FORMAT==="K").length;
+    const qtdF = books.filter(b => b.FORMAT==="F").length;
+
+    const genreCount={}, subCount={}, genrePages={}, genreBooks={}, authorCount={}, ratingCount=[0,0,0,0,0,0];
+    books.forEach(b=>{
+      if(b.TAG1){ genreCount[b.TAG1]=(genreCount[b.TAG1]||0)+1; genrePages[b.TAG1]=(genrePages[b.TAG1]||0)+(b.PAGES||0); genreBooks[b.TAG1]=(genreBooks[b.TAG1]||0)+1; }
+      [b.TAG2,b.TAG3].forEach(t=>t&&(subCount[t]=(subCount[t]||0)+1));
+      if(b.AUTHOR) authorCount[b.AUTHOR]=(authorCount[b.AUTHOR]||0)+1;
+      if(b.RATING>=1&&b.RATING<=5) ratingCount[b.RATING]++;
+    });
+
+    const topGenres=Object.entries(genreCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const topSubs=Object.entries(subCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const maioresGeneros=Object.entries(genrePages).map(([g,p])=>[g,Math.round(p/genreBooks[g])]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const menoresGeneros=Object.entries(genrePages).map(([g,p])=>[g,Math.round(p/genreBooks[g])]).sort((a,b)=>a[1]-b[1]).slice(0,4);
+    const topAuthors=Object.entries(authorCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    const months=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    const livrosMes={}, paginasMes={};
+    books.forEach(b=>{ livrosMes[b.MONTH]=(livrosMes[b.MONTH]||0)+1; paginasMes[b.MONTH]=(paginasMes[b.MONTH]||0)+(b.PAGES||0); });
+    const maxL=Math.max(...Object.values(livrosMes),1);
+    const maxP=Math.max(...Object.values(paginasMes),1);
+    const MAX_H=120;
+
+    const greatest=books.filter(b=>b.RATING===5&&b.FAV==="YES");
+
+    const block=document.createElement("div");
+    block.className = `flashback-block year-${year}`;
+block.innerHTML = `
+<section class="flashback">
+  <div class="card ano"><div class="number">${year}</div><span class="label">Livros</span></div>
+  <div class="card total"><span class="label">Total</span><div class="number">${fmt(total)}</div></div>
+  <div class="card pgs"><span class="label">Páginas</span><div class="number">${fmt(pages)}</div><small>${total ? (pages/total).toFixed(1) : "0"} pgs/livro • ${(pages/365).toFixed(1)} pgs/dia</small></div>
+  <div class="card media"><span class="label">Média</span><div class="number">${avg}</div></div>
+  <div class="card nota"><span class="label">★ ★ ★ ★ ★</span><div class="number">${fmt(nota5)}</div><small>nota 5</small></div>
+  <div class="card fav"><span class="label">⋆˙⟡ ❤︎ ⟡˙⋆⁠</span><div class="number">${fmt(favs)}</div><small>nota 5 + ❤︎ </small></div>
+  <div class="card maiormenor"><span class="label">Maior / Menor</span><div class="val">${maior.TITLE} • ${fmt(maior.PAGES)} pgs<br>${menor.TITLE} • ${fmt(menor.PAGES)} pgs</div></div>
+  <div class="card med"><span class="label">Formato</span><div class="val">${fmt(qtdK)} <small>no kindle</small> <br> ${fmt(qtdF)} <small>físicos</small></div></div>
+
+  <div class="card generos">
+    <span class="label">Gêneros</span><div class="treemap">      ${topGenres.map(([g,c]) => `<div class="genre" style="flex:${c}">${g}<span>${fmt(c)}</span></div>`).join("")}</div>
+  <span class="label">Subgêneros</span><div class="treemap">      ${topSubs.map(([g,c]) => `<div class="genre sub" style="flex:${c}">${g}<span>${fmt(c)}</span></div>`).join("")}</div>
+  </div>
+
+  <div class="card genero-metricas">
+    <div class="grupo">
+      <span class="label">
+        Gêneros + longos</span><div class="lista">        ${maioresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
+      </div>
+    </div>
+    <div class="grupo">      <span class="label">
+      Gêneros + curtos</span>      <div class="lista">        ${menoresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
+      </div>
+    </div>
+  </div>
+
+  <div class="card  genero-metricas">
+    <div class="lista">
+      <span class="label">Notas</span>      ${[5,4,3,2,1].map(n => `<div class="item"><span class="nome">${n}★</span><span class="valor">${fmt(ratingCount[n])}</span></div>`).join("")}
+    </div>
+    <div class="lista">    
+      <span class="label">Autores mais lidos</span>      ${topAuthors.map(([a,c]) => `<div class="item"><span class="nome">${a}</span><span class="valor">${fmt(c)}</span></div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card barras" style="grid-column: span 3;">
+    <span class="label">Livros por mês</span>    <div class="bars-vertical">      ${months.map(m => `<div class="col"><div class="bar" style="height:${(livrosMes[m]||0)/maxL*MAX_H}px"></div><span>${fmt(livrosMes[m]||0)}</span><span>${m[0]}</span></div>`).join("")}</div> </div>
+
+  <div class="card barras" style="grid-column: span 3;">
+    <span class="label">Páginas por mês</span>    <div class="bars-vertical">      ${months.map(m => `<div class="col"><div class="bar" style="height:${(paginasMes[m]||0)/maxP*MAX_H}px"></div><span>${fmt(paginasMes[m]||0)}</span><span>${m[0]}</span></div>`).join("")}</div></div>
+
+  <div class="card greatest"><span class="label">The Greatest</span><div class="favorites">${greatest.map(b => `<div>${b.TITLE}</div>`).join("")}</div></div>
+</section>
+    `;
+    container.appendChild(block);
+  });
+}
+// --- RENDER MENSAL ---
+function renderMonthlyFlashback(list) {
+  const year = document.getElementById("yearSelect").value;
+  const month = document.getElementById("monthSelect").value;
+  const filtered = list.filter(b => String(b.YEAR)===String(year)&&String(b.MONTH)===String(month));
+
+  const container=document.getElementById("flashback-container");
+  container.innerHTML="";
+  if(!filtered.length){ container.innerHTML="<p>Nenhum livro encontrado.</p>"; return; }
+
+  const total=filtered.length;
+  const pages=filtered.reduce((s,b)=>s+(b.PAGES||0),0);
+  const avg=(filtered.reduce((s,b)=>s+(b.RATING||0),0)/total||0).toFixed(2);
+  const favs=filtered.filter(b=>b.FAV==="YES").length;
+  const nota5=filtered.filter(b=>b.RATING===5).length;
+  const maior=filtered.reduce((a,b)=>(b.PAGES||0)>(a.PAGES||0)?b:a,filtered[0]);
+  const menor=filtered.reduce((a,b)=>(b.PAGES||0)<(a.PAGES||0)?b:a,filtered[0]);
+  const qtdK=filtered.filter(b=>b.FORMAT==="K").length;
+  const qtdF=filtered.filter(b=>b.FORMAT==="F").length;
+  const qtdPT=filtered.filter(b=>b.LANGUAGE==="PT").length;
+  const qtdIN=filtered.filter(b=>b.LANGUAGE==="IN").length;
+
+  const genreCount={}, subCount={}, genrePages={}, genreBooks={}, authorCount={}, ratingCount=[0,0,0,0,0,0];
+  filtered.forEach(b=>{
+    if(b.TAG1){ genreCount[b.TAG1]=(genreCount[b.TAG1]||0)+1; genrePages[b.TAG1]=(genrePages[b.TAG1]||0)+(b.PAGES||0); genreBooks[b.TAG1]=(genreBooks[b.TAG1]||0)+1; }
+    [b.TAG2,b.TAG3].forEach(t=>t&&(subCount[t]=(subCount[t]||0)+1));
+    if(b.AUTHOR) authorCount[b.AUTHOR]=(authorCount[b.AUTHOR]||0)+1;
+    if(b.RATING>=1&&b.RATING<=5) ratingCount[b.RATING]++;
+  });
+
+  const topGenres=Object.entries(genreCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const topSubs=Object.entries(subCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const topAuthors=Object.entries(authorCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maioresGeneros=Object.entries(genrePages).map(([g,p])=>[g,Math.round(p/genreBooks[g])]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const menoresGeneros=Object.entries(genrePages).map(([g,p])=>[g,Math.round(p/genreBooks[g])]).sort((a,b)=>a[1]-b[1]).slice(0,5);
+  const greatest=filtered.filter(b=>b.RATING===5&&b.FAV==="YES");
+  const maxPages=Math.max(...filtered.map(b=>b.PAGES||0),1);
+
+  const block=document.createElement("div");
+block.className = `flashback-block year-${year}`;
+  block.innerHTML = `
+<section class="flashback">
+
+  <div class="card ano">
+    <div class="number">${month} ${year}</div>
+    <span class="label">Leituras do mês</span>
+  </div>
+
+  <div class="card total"><span class="label">Total</span><div class="number">${fmt(total)}</div></div>
+  <div class="card pgs"><span class="label">Páginas</span><div class="number">${fmt(pages)}</div><small>${total ? (pages/total).toFixed(1) : "0"} pgs/livro • ${(pages/365).toFixed(1)} pgs/dia</small></div>
+  <div class="card media"><span class="label">Média</span><div class="number">${avg}</div></div>
+  <div class="card nota"><span class="label">★ ★ ★ ★ ★</span><div class="number">${fmt(nota5)}</div><small>nota 5</small></div>
+  <div class="card fav"><span class="label">⋆˙⟡ ❤︎ ⟡˙⋆⁠</span><div class="number">${fmt(favs)}</div><small>nota 5 + ❤︎ </small></div>
+
+  <div class="card maiormenor">
+    <span class="label">Maior / Menor</span>
+    <div class="val">${maior.TITLE} • ${maior.PAGES}p<br>
+    ${menor.TITLE} • ${menor.PAGES}p</div>
+  </div>
+
+  <div class="card med">
+    <span class="label">Formato</span>
+    <div class="val">${qtdK} <small>kindle</small> | ${qtdF} <small>físico</small><br>${qtdPT} <small>PT</small> | ${qtdIN} <small>IN</small></div>
+  </div>
+
+  <div class="card generos">
+    <span class="label">Gêneros</span>
+    <div class="treemap">
+      ${topGenres.map(([g,c]) => `<div class="genre" style="flex:${c}">${g}<span>${c}</span></div>`).join("")}
+    </div>
+
+    <span class="label">Subgêneros</span>
+    <div class="treemap">
+      ${topSubs.map(([g,c]) => `<div class="genre sub" style="flex:${c}">${g}<span>${c}</span></div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card genero-metricas">
+    <div class="grupo">
+      <span class="label">Gêneros + longos</span>
+      <div class="lista">
+        ${maioresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${p} pgs</span></div>`).join("")}
+      </div>
+    </div>
+
+    <div class="grupo">
+      <span class="label">Gêneros + curtos</span>
+      <div class="lista">
+        ${menoresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${p} pgs</span></div>`).join("")}
+      </div>
+    </div>
+  </div>
+
+  <div class="card genero-metricas">
+    <div class="lista">
+      <span class="label">Notas</span>
+      ${[5,4,3,2,1].map(n => `
+        <div class="item">
+          <span class="nome">${n}★</span>
+          <span class="valor">${ratingCount[n]}</span>
+        </div>`).join("")}
+    </div>
+
+    <div class="lista">
+      <span class="label">Autores mais lidos</span>
+      ${topAuthors.map(([a,c]) => `
+        <div class="item">
+          <span class="nome">${a}</span>
+          <span class="valor">${c}</span>
+        </div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card barras" style="grid-column: span 6;">
+    <span class="label">Páginas por livro</span>
+    <div class="bars-vertical">
+      ${filtered.map(b => `
+        <div class="col">
+          <div class="bar" style="height:${(b.PAGES||0)/maxPages*120}px"></div>
+          <span>${b.PAGES||0}</span>
+        </div>`).join("")}
+    </div>
+  </div>
+
+  <div class="card greatest">
+    <span class="label">The Greatest</span>
+    <div class="favorites">
+      ${greatest.map(b => `<div>${b.TITLE}</div>`).join("")}
+    </div>
+  </div>
+
+</section>
+  `;
+
+  container.appendChild(block);
+}
+
+// Botão Reset: limpa filtro de mês e renderiza apenas o ano selecionado
+document.getElementById("resetBtn").onclick = () => {
+  const year = document.getElementById("yearSelect").value;
+  document.getElementById("monthSelect").value = ""; // limpa seleção de mês
+  renderAnnualFlashback(window.allBooks, year); // renderiza apenas o ano
+};
+
+
+["charts","flashs","tables","form"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
+});
+
+</script>
+
+</body>
+</html>

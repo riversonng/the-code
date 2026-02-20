@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livro > Json</title>
+<style>
+
+  :root{
+  --bg:#f4f1f7;
+  --bg-light:#faf8fc;
+  --card:#ffffff;
+  --border:#e5e0eb;
+  --border-strong:#d6cfe0;
+  --text:#2d2a32;
+  --muted:#6b6478;
+  --accent:#6c4dc0;
+  --accent-light:#a084d7;
+  --accent-soft:#f2e3ff;
+  --chip:#caf5ee;
+  --star-color:#fcc31a;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Segoe UI,system-ui,sans-serif;
+}
+
+header{
+  margin:0 auto;
+  justify-content:center;
+  padding:8px 16px;
+  background:var(--card);
+  border-bottom:2px solid var(--border-strong);
+}
+
+header h1{
+  font-size:24px;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.header-buttons{
+  gap:4px;
+}
+
+.header-buttons button{
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  padding:4px 8px;
+  font-size:14px;
+  cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+
+.header-buttons button:hover{
+  background: color-mix(in srgb,var(--accent) 80%,black);
+  transform:translateY(-1px);
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  padding:12px;
+}
+
+h1{
+  text-align:center;
+  font-size:22px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+.form-section, .output-section{
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:8px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.03);
+}
+
+label{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:2px;
+}
+
+input, select{
+  padding:6px 8px;
+  border:1px solid var(--border-strong);
+  border-radius:6px;
+  font-size:13px;
+  background:var(--bg-light);
+  color:var(--text);
+  outline:none;
+}
+
+input:focus, select:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 4px var(--accent-soft);
+}
+
+.button-group{
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.button-group button{
+  flex:1;
+  padding:6px;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+  color:#fff;
+  font-weight:600;
+}
+
+.btn-generate{background: var(--accent);}
+.btn-generate:hover{background: var(--accent-light);}
+.btn-copy{background:#28a745;}
+.btn-copy:hover{background:#1e7e34;}
+
+.option-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+
+.option-group button{
+  padding:4px 8px;
+  font-size:12px;
+  border-radius:6px;
+  border:1px solid var(--border-strong);
+  background:var(--bg-light);
+  cursor:pointer;
+}
+
+.option-group button.selected{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+
+.star-rating{
+  display:flex;
+  gap:1px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.star-rating span{
+  color:#ccc;
+  position:relative;
+  display:inline-block;
+}
+
+.star-rating span.full{
+  color:var(--star-color);
+}
+
+.star-rating span.half::before{
+  content:'★';
+  position:absolute;
+  left:0;
+  width:50%;
+  overflow:hidden;
+  color:var(--star-color);
+}
+
+pre{
+  background:var(--bg-light);
+  border-radius:6px;
+  padding:8px;
+  font-size:12px;
+  overflow-x:auto;
+  white-space:pre-wrap;
+  word-wrap:break-word;
+}
+
+select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  background-image:url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23354052' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  background-size:12px;
+  padding-right:24px;
+}
+/* ===== MOBILE ===== */
+@media (max-width: 768px){
+
+  .container{
+    grid-template-columns:1fr; /* vira coluna única */
+  }
+
+  h1{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    font-size:20px;
+  }
+
+  .header-buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .header-buttons button{
+    font-size:13px;
+    padding:6px 10px;
+  }
+
+  .form-section,
+  .output-section{
+    padding:14px;
+  }
+
+  input,
+  select{
+    font-size:14px;
+  }
+
+  .button-group{
+    flex-direction:column;
+  }
+
+  .button-group button{
+    width:100%;
+    padding:8px;
+  }
+
+  .option-group{
+    gap:6px;
+  }
+
+  .option-group button{
+    font-size:13px;
+    padding:6px 10px;
+  }
+
+  .star-rating{
+    font-size:24px;
+  }
+
+  pre{
+    font-size:13px;
+  }
+
+}
+</style>
+</head>
+<body>
+<h1>Livro > Json
+  <div class="header-buttons">
+    <button id="charts">📋</button>
+    <button id="tables">📅</button>
+    <button id="flashs">📖</button>
+    <button id="form">↳↰</button>
+  </div></h1>
+  <div class="container">
+
+<div class="form-section">
+<label for="title">Título:</label>
+<input type="text" id="title">
+<label for="series">Série:</label>
+<input type="text" id="series">
+<label for="author">Autor:</label>
+<input type="text" id="author">
+<label for="pages">Páginas:</label>
+<input type="number" id="pages">
+<label>Ano:</label>
+<div id="yearOptions" class="option-group"></div>
+<label>Mês:</label>
+<div id="monthOptions" class="option-group"></div>
+<label>Avaliação:</label>
+<div id="ratingOptions" class="star-rating"></div>
+<label>Formato:</label>
+<div id="formatOptions" class="option-group"></div>
+<label>Idioma:</label>
+<div id="languageOptions" class="option-group"></div>
+<label for="tag1">Gênero / Subgênero 1:</label>
+<select id="tag1"></select>
+<label for="tag2">Gênero / Subgênero 2:</label>
+<select id="tag2"></select>
+<label for="tag3">Gênero / Subgênero 3:</label>
+<select id="tag3"></select>
+<label for="isbn">ISBN:</label>
+<input type="text" id="isbn">
+<div class="button-group">
+<button class="btn-generate" onclick="generateJSON()">Gerar JSON</button>
+<button class="btn-copy" onclick="copyJSON()">Copiar JSON</button>
+</div>
+</div>
+<div class="output-section">
+<label>JSON Gerado:</label>
+<pre id="jsonOutput"></pre>
+</div>
+</div>
+<script>
+const genres=["Romance","Drama","Fantasia","Mistério","Suspense","Terror","SciFi","Distopia","Histórico","Biografia","Não Ficção","Graphic Novel","Mangá","Ficção de Cura","Crime","Guerra","de Época","Clássico","Aventura","Contemporâneo","NSFW","Thriller","Gore","LGBTQ+","Juvenil","Sociais","Ficção Histórica","Mitologia","Monster","Sátira","Política","Não ficção","Faroeste","Poesia","História"];
+const uniqueGenres=[...new Set(genres)].sort((a,b)=>a.localeCompare(b,'pt'));
+function createOptions(containerId,optionsArray,defaultValue){const container=document.getElementById(containerId);optionsArray.forEach(opt=>{const btn=document.createElement('button');btn.textContent=opt;btn.addEventListener('click',()=>{Array.from(container.children).forEach(b=>b.classList.remove('selected'));btn.classList.add('selected')});if(opt===defaultValue)btn.classList.add('selected');container.appendChild(btn)})}
+const yearArray=[];for(let y=2024;y<=new Date().getFullYear();y++)yearArray.push(y);createOptions('yearOptions',yearArray)
+const months=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];createOptions('monthOptions',months)
+createOptions('formatOptions',["K","F"],"K")
+createOptions('languageOptions',["PT","IN"],"PT")
+const ratingContainer = document.getElementById('ratingOptions');
+ratingContainer.dataset.value = 0;
+for (let i = 1; i <= 5; i++) {
+    const star = document.createElement('span');
+    star.innerHTML = "★";
+    star.dataset.value = i;
+    star.addEventListener('mousemove', e => {
+        const rect = star.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        Array.from(ratingContainer.children).forEach(s => s.classList.remove('full','half'));
+        Array.from(ratingContainer.children).forEach((s,j)=>{
+            if(j < i-1) s.classList.add('full');
+            else if(j === i-1) s.classList.add(percent < 0.5 ? 'half' : 'full');
+        });
+    });
+    star.addEventListener('click', e => {
+        const rect = star.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        ratingContainer.dataset.value = (i-1) + (percent < 0.5 ? 0.5 : 1);
+        Array.from(ratingContainer.children).forEach(s => s.classList.remove('full','half'));
+        Array.from(ratingContainer.children).forEach((s,j)=>{
+            if(j < i-1) s.classList.add('full');
+            else if(j === i-1) s.classList.add(percent < 0.5 ? 'half' : 'full');
+        });
+    });
+    star.addEventListener('mouseout', () => {
+        const value = parseFloat(ratingContainer.dataset.value || 0);
+        Array.from(ratingContainer.children).forEach(s => s.classList.remove('full','half'));
+        Array.from(ratingContainer.children).forEach((s,j)=>{
+            if(j < Math.floor(value)) s.classList.add('full');
+            else if(j === Math.floor(value) && value % 1 !== 0) s.classList.add('half');
+        });
+    });
+    ratingContainer.appendChild(star);
+}
+const favHeart = document.createElement('span');
+favHeart.innerHTML = "♥";
+favHeart.style.cursor = 'pointer';
+favHeart.style.fontSize = '24px';
+favHeart.style.marginLeft = '10px';
+favHeart.style.color = '#ccc'; // cinza quando não selecionado
+ratingContainer.appendChild(favHeart);
+
+favHeart.addEventListener('click', () => {
+    if(favHeart.dataset.selected === "yes"){
+        favHeart.dataset.selected = "no";
+        favHeart.style.color = "#ccc"; // desmarcado
+    } else {
+        favHeart.dataset.selected = "yes";
+        favHeart.style.color = "red"; // marcado
+    }
+});
+
+['tag1','tag2','tag3'].forEach(id=>{const sel=document.getElementById(id);const emptyOpt=document.createElement('option');emptyOpt.value="";emptyOpt.text="Selecione";sel.add(emptyOpt);uniqueGenres.forEach(g=>{const opt=document.createElement('option');opt.value=g;opt.text=g;sel.add(opt)})})
+function generateJSON(){
+    const bookObj = {
+        TITLE: document.getElementById('title').value,
+        SERIES: document.getElementById('series').value,
+        AUTHOR: document.getElementById('author').value,
+        YEAR: Number(document.querySelector('#yearOptions button.selected')?.textContent || 0),
+        MONTH: document.querySelector('#monthOptions button.selected')?.textContent || "",
+        PAGES: Number(document.getElementById('pages').value),
+        RATING: Number(document.getElementById('ratingOptions').dataset.value || 0),
+        FAV: favHeart.dataset.selected === "yes" ? "YES" : "NO",
+        FORMAT: document.querySelector('#formatOptions button.selected')?.textContent || "",
+        LANGUAGE: document.querySelector('#languageOptions button.selected')?.textContent || "",
+        TAG1: document.getElementById('tag1').value,
+        TAG2: document.getElementById('tag2').value,
+        TAG3: document.getElementById('tag3').value,
+        ISBN: document.getElementById('isbn').value
+    };
+
+    // Transformar em JSON textualizado sem os []
+    const jsonText = `,${JSON.stringify(bookObj, null, 4)}`;
+
+    // Exibir no textarea ou div
+    document.getElementById('jsonOutput').textContent = jsonText;
+}
+
+function copyJSON(){
+  const jsonText=document.getElementById('jsonOutput').textContent;
+  if(!jsonText)return;navigator.clipboard.writeText(jsonText)
+  .then(()=>{alert('JSON copiado para a área de transferência!')})}
+
+["charts","flashs","tables","form"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
+});
+
+</script>
+</body>
+</html>

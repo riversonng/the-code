@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Gêneros</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --bg: #f6f8fb;              /* fundo geral azul bem claro */
+  --card: #ffffff;            /* fundo dos cards */
+  --border: #d6e2f0;          /* bordas suaves */
+  --border-strong: #b8e6c7;   /* bordas internas */
+  --text: #1d3d1d;            /* texto principal */
+  --muted: #557555;           /* texto secundário */
+
+  /* Accent agora em tom pastel mais vivo */
+  --accent: #3f8831a8;          /* azul pastel mais forte */
+  --accent-soft: #ffffffc2;     /* azul pastel bem claro */
+
+  --notebook-bg: #ffffff;     
+  --notebook-border: #dbdbdb;
+
+  /* linhas do "caderno" mais delicadas */
+  --line: #e9f1fb;
+}
+
+
+/* ===== BODY ===== */
+body {
+  font-family:Segoe UI,system-ui,sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+header {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--card);
+  border-radius: 0;                     /* sem cantos arredondados */
+  border-bottom: 2px solid var(--border-strong); /* linha inferior */
+  box-shadow: none;                     /* sem sombra */
+  max-width: 1100px;}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.header-buttons button:hover {
+  background: color-mix(in srgb, var(--accent) 80%, black);
+  transform: translateY(-2px);
+}
+/* ===== ABAS ===== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  background: transparent; /* remove fundo branco */
+  border-bottom: none;      /* remove linha inferior */
+  gap: 8px;
+  padding: 12px 0 0 0;      /* remove espaço inferior */
+  top: 0;
+  z-index: 100;
+}
+
+.tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
+  background: var(--accent-soft);
+  transition: 0.2s;
+}
+
+.tab.active {
+  background: var(--notebook-bg); /* mesma cor do conteúdo */
+  color: var(--text);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08); /* sombra suave */
+  position: relative;
+  top: 2px; /* desce levemente para "grudar" no conteúdo */
+}
+
+
+/* ===== CONTEÚDO ===== */
+.tab-content {
+  display: none;
+  max-width: 900px;
+  margin: 0px auto;
+  padding: 32px;
+  background: var(--notebook-bg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--notebook-bg),
+    var(--notebook-bg) 28px,
+    var(--line) 29px
+  );
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ===== TÍTULOS ===== */
+.year-title-gen {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* ===== TABELAS ===== */
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  margin: 24px auto;
+}
+
+th, td {
+  border: none;
+  text-align: center;
+  font-size: 12px;
+  position: relative;
+  border-radius: 4px;
+}
+
+th:first-child,
+td:first-child {
+  width: 140px;
+  text-align: left;
+  padding-left: 8px;
+  background: var(--accent-soft);
+  font-weight: 600;
+  color: var(--text);
+}
+
+td {
+  background: var(--card);
+  width: 32px;
+  height: 32px;
+}
+
+.excesso {
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  color: white;
+  background: var(--accent);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.legend-container {
+  margin-top: 28px;
+  padding: 20px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 14px;
+  border: 1px solid #eee;
+}
+
+.legend-group {
+  margin-bottom: 18px;
+}
+
+.legend-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.legend-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px 20px; /* espaço vertical e horizontal */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* RESPONSIVO */
+@media (max-width: 850px) {
+  table td, table th { width: 24px; height: 24px; }
+}
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .header-buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .header-buttons button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-left: 12px;
+  }
+
+  .tab {
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .tab-content {
+    padding: 16px;
+  }
+
+  .year-title-gen {
+    font-size: 22px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  table td,
+  table th {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 90px;
+    font-size: 11px;
+  }
+
+  .legend-items {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+}
+
+</style>
+
+</head>
+<body>
+<header>
+  <h1>Mapa de Gêneros</h1>
+  <div class="header-buttons">
+    <button id="charts">📋</button>
+    <button id="tables">📅</button>
+    <button id="flashs">📖</button>
+        <button id="form">↳↰</button>
+</header>
+<div class="tabs" id="tabsContainer"></div>
+<div id="containerAnos"></div>
+
+<script>
+const anoInicial = 2020;
+const anoAtual = new Date().getFullYear();
+const maxColunasPadrao = 20;
+const unidade = 1;
+const unidadeFormato = 5;
+const unidadeIdioma = 5;
+
+const mesesNomes = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const mapaMeses = {"Janeiro":0,"Fevereiro":1,"Março":2,"Abril":3,"Maio":4,"Junho":5,"Julho":6,"Agosto":7,"Setembro":8,"Outubro":9,"Novembro":10,"Dezembro":11};
+
+function gerarPaletaAno(ano) {
+    // Tons pasteis com contraste maior
+    const tonsPastel = [
+        { principal: '#FF8C8C', suave: '#FFE5E5' }, // rosa pastel com contraste
+        { principal: '#FFBF80', suave: '#FFEBD6' }, // pêssego
+        { principal: '#FFFF80', suave: '#FFFFD6' }, // amarelo claro
+        { principal: '#80FFB3', suave: '#D6FFF0' }, // verde menta
+        { principal: '#80D4FF', suave: '#D6F4FF' }, // azul claro
+        { principal: '#C080FF', suave: '#EBD6FF' }, // lilás
+        { principal: '#FFB380', suave: '#FFEBD6' }, // salmão
+    ];
+    // Escolhe um tom baseado no ano
+    const index = (ano - 2020) % tonsPastel.length;
+    return { corPrincipal: tonsPastel[index].principal, corSuave: tonsPastel[index].suave };
+}
+
+const coresGeneros = {};
+const paletaGeneros = [
+  "#FF8C8C", "#FFBF80", "#FFFF80",
+  "#80FFB3", "#80D4FF", "#C080FF",
+  "#FF80BF", "#B3FF80", "#FFB380",
+  "#80FFD4", "#D480FF"
+];
+
+function corParaGenero(genero){
+  if(!coresGeneros[genero]){
+    const index = Object.keys(coresGeneros).length % paletaGeneros.length;
+    coresGeneros[genero] = paletaGeneros[index];
+  }
+  return coresGeneros[genero];
+}
+
+fetch("books.json")
+.then(res=>res.json())
+.then(livros=>{
+
+const tabsContainer = document.getElementById("tabsContainer");
+const container = document.getElementById("containerAnos");
+
+// =====================================================
+// CORES FIXAS PARA TAG1 (GÊNERO PRINCIPAL)
+// =====================================================
+
+const coresTag1 = {
+  "Romance": "#E75480",
+  "Drama": "#9333EA",
+  "Fantasia": "#3B82F6",
+  "Mistério": "#0F172A",
+  "Suspense": "#DC2626",
+  "Terror": "#111827",
+  "SciFi": "#06B6D4",
+  "Distopia": "#475569",
+  "Histórico": "#F59E0B",
+  "Biografia": "#FEF3C7",
+  "Não Ficção": "#6B7280",
+  "Graphic Novel": "#10B981",
+  "Mangá": "#F97316",
+  "Ficção de Cura": "#E9D5FF"
+};
+
+
+// =====================================================
+// CORES DINÂMICAS PARA TAG2 (SUBGÊNERO)
+// =====================================================
+
+const coresTag2 = {};
+
+function gerarCorDeterministica(texto){
+  let hash = 0;
+  for(let i=0;i<texto.length;i++){
+    hash = texto.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const cor = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+  return "#" + "00000".substring(0, 6 - cor.length) + cor + "AA";
+}
+
+function corParaTag2(tag2){
+  if(!tag2) return null;
+
+  tag2 = (tag2);
+
+  if(!coresTag2[tag2]){
+    coresTag2[tag2] = gerarCorDeterministica(tag2);
+  }
+  return coresTag2[tag2];
+}
+
+// =====================================================
+// LOOP POR ANO
+// =====================================================
+
+for(let ano = anoAtual; ano >= anoInicial; ano--){
+
+  const paleta = gerarPaletaAno(ano);
+  const livrosAno = livros.filter(l=>l.YEAR===ano);
+
+  const tab = document.createElement("div");
+  tab.className = "tab";
+  tab.textContent = ano;
+  tabsContainer.appendChild(tab);
+
+  const content = document.createElement("div");
+  content.className = "tab-content";
+
+  tab.onclick = ()=> {
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+    tab.classList.add("active");
+    content.classList.add("active");
+  };
+
+  const yearTitle = document.createElement("div");
+  yearTitle.className = "year-title-gen";
+  yearTitle.textContent = ano;
+  content.appendChild(yearTitle);
+
+  // =====================================================
+  // TABELA PRINCIPAL
+  // =====================================================
+
+  const tabelaMeses = document.createElement("table");
+
+  let header = "<tr><th></th>";
+  for(let i=1;i<=maxColunasPadrao;i++){
+    header += `<th>${i}</th>`;
+  }
+  header += "</tr>";
+
+  tabelaMeses.innerHTML = header;
+
+  const livrosPorMes = Array.from({length:12}, ()=>[]);
+
+  livrosAno.forEach(l=>{
+    const mesIndex = mapaMeses[l.MONTH];
+    if(mesIndex !== undefined){
+      livrosPorMes[mesIndex].push(l);
+    }
+  });
+
+  let total = 0;
+
+  livrosPorMes.forEach((livrosMes,m)=>{
+
+    total += livrosMes.length;
+
+    let linha = `<tr><td>${mesesNomes[m]}</td>`;
+
+for(let c=0;c<maxColunasPadrao;c++){
+  if(livrosMes[c]){
+    const livro = livrosMes[c];
+
+    const tag1 = (livro.TAG1);
+    const tag2 = (livro.TAG2);
+
+    const corBase = coresTag1[tag1] || "#E5E7EB"; // TAG1
+    const corSub = corParaTag2(tag2) || corBase;   // TAG2
+
+    // Gradient: TAG1 primeiro, TAG2 sobrepondo
+    let backgroundStyle = tag2
+      ? `linear-gradient(135deg, ${corBase} 0%, ${corBase} 55%, ${corSub} 55%, ${corSub} 100%)`
+      : corBase;
+
+    linha += `<td 
+                style="background:${backgroundStyle}" 
+                title="${livro.TITLE} - ${tag1}${tag2 ? " / "+tag2 : ""}">
+              </td>`;
+  } else {
+    linha += `<td style="background:${paleta.corSuave}"></td>`;
+  }
+}
+
+    linha += "</tr>";
+    tabelaMeses.innerHTML += linha;
+  });
+
+  tabelaMeses.innerHTML += `
+    <tr>
+      <td colspan="${maxColunasPadrao+1}" 
+          style="text-align:left; font-size:12px; padding:6px;">
+          Cada quadrado = 1 leitura | Total: ${total} leituras
+      </td>
+    </tr>
+  `;
+
+  content.appendChild(tabelaMeses);
+
+
+
+// =====================================================
+// LEGENDA AUTOMÁTICA (LISTAS UNIFORMES)
+// =====================================================
+
+const legendaContainer = document.createElement("div");
+legendaContainer.className = "legend-container";
+
+// ===== TAG1 =====
+const grupoTag1 = document.createElement("div");
+grupoTag1.className = "legend-group";
+
+const titulo1 = document.createElement("div");
+titulo1.className = "legend-title";
+titulo1.textContent = "Gêneros";
+
+const itens1 = document.createElement("ul");
+itens1.className = "legend-items";
+
+Object.entries(coresTag1).forEach(([nome, cor]) => {
+  const item = document.createElement("li");
+  item.className = "legend-item";
+
+  const box = document.createElement("span");
+  box.className = "legend-color";
+  box.style.background = cor;
+
+  item.appendChild(box);
+  item.appendChild(document.createTextNode(nome));
+  itens1.appendChild(item);
+});
+
+grupoTag1.appendChild(titulo1);
+grupoTag1.appendChild(itens1);
+legendaContainer.appendChild(grupoTag1);
+
+// ===== TAG2 =====
+if (Object.keys(coresTag2).length) {
+
+  const grupoTag2 = document.createElement("div");
+  grupoTag2.className = "legend-group";
+
+  const titulo2 = document.createElement("div");
+  titulo2.className = "legend-title";
+  titulo2.textContent = "Subgêneros";
+
+  const itens2 = document.createElement("ul");
+  itens2.className = "legend-items";
+
+  Object.entries(coresTag2).forEach(([nome, cor]) => {
+    const item = document.createElement("li");
+    item.className = "legend-item";
+
+    const box = document.createElement("span");
+    box.className = "legend-color";
+    box.style.background = cor;
+
+    item.appendChild(box);
+    item.appendChild(document.createTextNode(nome));
+    itens2.appendChild(item);
+  });
+
+  grupoTag2.appendChild(titulo2);
+  grupoTag2.appendChild(itens2);
+  legendaContainer.appendChild(grupoTag2);
+}
+
+content.appendChild(legendaContainer);
+
+  container.appendChild(content);
+}
+
+
+// ATIVAR PRIMEIRA ABA
+const primeiraTab = document.querySelector(".tab");
+const primeiroConteudo = document.querySelector(".tab-content");
+
+if(primeiraTab && primeiroConteudo){
+  primeiraTab.classList.add("active");
+  primeiroConteudo.classList.add("active");
+}
+
+});
+
+["charts","flashs","tables","form"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
+});
+
+
+</script>
+</body>
+</html>
