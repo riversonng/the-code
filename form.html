@@ -271,7 +271,7 @@ select{
 <body>
 <h1>Livro > Json
   <div class="header-buttons">
-    <button id="charts">📋</button>
+    <button id="index">📋</button>
     <button id="tables">📅</button>
     <button id="flashs">📖</button>
     <button id="form">↳↰</button>
@@ -407,10 +407,11 @@ function copyJSON(){
   if(!jsonText)return;navigator.clipboard.writeText(jsonText)
   .then(()=>{alert('JSON copiado para a área de transferência!')})}
 
-["charts","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","form"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
 
 </script>
 </body>
 </html>
+
