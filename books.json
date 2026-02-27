@@ -7768,7 +7768,22 @@
     "TAG1": "Clássico",
     "TAG2": "Drama",
     "TAG3": "",
-    "ISBN": "9788582850954"
-}
+    "ISBN": "9788582850954"},     
+  { "TITLE": "O Herói das Eras",
+    "SERIES": "Mistborn #3",
+    "AUTHOR": "Brandon Sanderson",
+    "YEAR": 2026,
+    "MONTH": "Fevereiro",
+    "PAGES": 800,
+    "RATING": 5,
+    "FAV": "YES",
+    "FORMAT": "K",
+    "LANGUAGE": "PT",
+    "TAG1": "Fantasia",
+    "TAG2": "Aventura",
+    "TAG3": "",
+    "ISBN": "9786581339203"},
+
 ]
+
 
