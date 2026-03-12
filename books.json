@@ -556,8 +556,9 @@
 { "TITLE": "Uma canção de Natal", "SERIES": "", "AUTHOR": "Charles Dickens", "YEAR": 2026, "MONTH": "Fevereiro", "PAGES": 135, "RATING": 4, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Clássico", "TAG2": "Drama", "TAG3": "", "ISBN": "9788582850954"},     
 { "TITLE": "O Herói das Eras", "SERIES": "Mistborn #3", "AUTHOR": "Brandon Sanderson", "YEAR": 2026, "MONTH": "Fevereiro", "PAGES": 800, "RATING": 5, "FAV": "YES", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Fantasia", "TAG2": "Aventura", "TAG3": "", "ISBN": "9786581339203"},
 { "TITLE": "A pequena loja de venenos", "SERIES": "", "AUTHOR": "Sarah Penner", "YEAR": 2026, "MONTH": "Fevereiro", "PAGES": 320, "RATING": 4.5, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Drama", "TAG2": "Ficção Histórica", "TAG3": "", "ISBN": "9786555113747"},
-{  "TITLE": "Assassinato na família", "SERIES": "", "AUTHOR": "Cara Hunter", "YEAR": 2026, "MONTH": "Março", "PAGES": 570, "RATING": 5, "FAV": "YES", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Mistério", "TAG2": "Suspense", "TAG3": "", "ISBN": "9786581339326" }
-]
+{  "TITLE": "Assassinato na família", "SERIES": "", "AUTHOR": "Cara Hunter", "YEAR": 2026, "MONTH": "Março", "PAGES": 570, "RATING": 5, "FAV": "YES", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Mistério", "TAG2": "Suspense", "TAG3": "", "ISBN": "9786581339326" },
+{ "TITLE": "Mysteries of Thorn Manor", "SERIES": "", "AUTHOR": "Margaret Rogerson", "YEAR": 2026, "MONTH": "Março", "PAGES": 186, "RATING": 5, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "IN", "TAG1": "Fantasia", "TAG2": "Romance", "TAG3": "", "ISBN": "9781398522107"}
+] 
 
 
 
