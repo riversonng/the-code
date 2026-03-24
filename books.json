@@ -557,7 +557,12 @@
 { "TITLE": "O Herói das Eras", "SERIES": "Mistborn #3", "AUTHOR": "Brandon Sanderson", "YEAR": 2026, "MONTH": "Fevereiro", "PAGES": 800, "RATING": 5, "FAV": "YES", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Fantasia", "TAG2": "Aventura", "TAG3": "", "ISBN": "9786581339203"},
 { "TITLE": "A pequena loja de venenos", "SERIES": "", "AUTHOR": "Sarah Penner", "YEAR": 2026, "MONTH": "Fevereiro", "PAGES": 320, "RATING": 4.5, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Drama", "TAG2": "Ficção Histórica", "TAG3": "", "ISBN": "9786555113747"},
 {  "TITLE": "Assassinato na família", "SERIES": "", "AUTHOR": "Cara Hunter", "YEAR": 2026, "MONTH": "Março", "PAGES": 570, "RATING": 5, "FAV": "YES", "FORMAT": "K", "LANGUAGE": "PT", "TAG1": "Mistério", "TAG2": "Suspense", "TAG3": "", "ISBN": "9786581339326" },
-{ "TITLE": "Mysteries of Thorn Manor", "SERIES": "", "AUTHOR": "Margaret Rogerson", "YEAR": 2026, "MONTH": "Março", "PAGES": 186, "RATING": 5, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "IN", "TAG1": "Fantasia", "TAG2": "Romance", "TAG3": "", "ISBN": "9781398522107"}
+{ "TITLE": "Mysteries of Thorn Manor", "SERIES": "", "AUTHOR": "Margaret Rogerson", "YEAR": 2026, "MONTH": "Março", "PAGES": 186, "RATING": 5, "FAV": "NO", "FORMAT": "K", "LANGUAGE": "IN", "TAG1": "Fantasia", "TAG2": "Romance", "TAG3": "", "ISBN": "9781398522107"},
+{"TITLE":"Para o inferno","SERIES":"Alex Stern #2","AUTHOR":"Leigh Bardugo","YEAR":2026,"MONTH":"Março","PAGES":496,"RATING":5,"FAV":"NO","FORMAT":"K","LANGUAGE":"PT","TAG1":"Fantasia","TAG2":"Drama","TAG3":"Thriller","ISBN":"9781398522107"},
+{"TITLE":"O Morro dos Ventos Uivantes","SERIES":"","AUTHOR":"Emily Brontë","YEAR":2026,"MONTH":"Março","PAGES":368,"RATING":5,"FAV":"YES","FORMAT":"F","LANGUAGE":"PT","TAG1":"Drama","TAG2":"Romance","TAG3":"Ficção Histórica","ISBN":"9788594318237"},
+{"TITLE":"Jogo de amor para dois","SERIES":"","AUTHOR":"Ali Hazelwood","YEAR":2026,"MONTH":"Março","PAGES":176,"RATING":5,"FAV":"NO","FORMAT":"K","LANGUAGE":"PT","TAG1":"Romance","TAG2":"NSFW","TAG3":"","ISBN":"9786555659528"},
+{"TITLE":"A alma do Imperador","SERIES":"","AUTHOR":"Brandon Sanderson","YEAR":2026,"MONTH":"Março","PAGES":143,"RATING":5,"FAV":"NO","FORMAT":"K","LANGUAGE":"PT","TAG1":"Fantasia","TAG2":"","TAG3":"","ISBN":"9781616960926"}
+
 ] 
 
 
