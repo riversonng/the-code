@@ -906,7 +906,8 @@ function cardHTML(b) {
   const tags = [b.TAG1, b.TAG2, b.TAG3].filter(Boolean);
   const fav = (b.FAV || "").toUpperCase() === "YES";
   const rating = Number(b.RATING) || 0;
-  const ratingStars = "★".repeat(Math.floor(rating));
+ const ratingStars =  "★".repeat(Math.floor(rating)) +
+  (rating % 1 === 0.5 ? "☆" : "");
 
   const formatIcon = b.FORMAT === "K" ? "K" : b.FORMAT === "F" ? "F" : "";
   const langIcon = b.LANGUAGE === "PT" ? "PT" : b.LANGUAGE === "IN" ? "IN" : "";
