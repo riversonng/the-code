@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Leituras</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* --- CONFIGURAÇÃO DE PALETAS (TEMAS) --- */
+:root {
+  --bg: #e0dcf8;         /* Lavanda pastel de fundo */
+  --card: #ffffff;       
+  --text: #3b2a57;       /* Roxo ametista escuro para leitura */
+  --text-muted: #23c1c7; /* Tons pastéis secundários */
+  --border: #e7dd83;     
+  --skoob-blue: #ff7597; /* Rosa chiclete pastel para botões */
+  --btn-text: #ffffff;
+  --radius: 8px;
+}
+
+/* 📜 Tema Claro 2: Light Dark Academia */
+[data-theme="light-dark-academia"] {
+  --bg: #f4eae1;         /* Papel antigo / Bege pergaminho claro */
+  --card: #fcf8f2;       /* Marfim suave */
+  --text: #2b1f1d;       /* Marrom sépia escuro (tinta nanquim) */
+  --text-muted: #7c6a5e; /* Camurça fosco */
+  --border: #dfcfbe;     /* Bordas de papel envelhecido */
+  --skoob-blue: #5c4033; /* Marrom café/couro para botões */
+  --btn-text: #fdfaf7;
+}
+
+/* 📚 Tema Escuro 1: Dark Academia */
+[data-theme="dark-academia"] {
+  --bg: #1a1412;         /* Marrom quase preto / Madeira escura */
+  --card: #281e1b;       /* Marrom couro profundo */
+  --text: #f4ede4;       /* Papel antigo / Marfim claro */
+  --text-muted: #a89481; /* Sépia / Camurça */
+  --border: #3d302b;     /* Bordas sutis de madeira */
+  --skoob-blue: #8c6239; /* Ouro velho / Bronze para botões */
+  --btn-text: #f4ede4;
+}
+
+/* 🍷 Tema Escuro 2: Veludo (Velvet Night) */
+[data-theme="veludo"] {
+  --bg: #0f050c;         /* Vinho/Roxo extremamente escuro */
+  --card: #1f0d1a;       /* Veludo ameixa profundo */
+  --text: #fbebf5;       /* Seda clara com toque rosado */
+  --text-muted: #b38da9; /* Malva fosco */
+  --border: #381630;     /* Bordas de vinho fundido */
+  --skoob-blue: #d12b6f; /* Vermelho carmim/veludo vibrante para botões */
+  --btn-text: #ffffff;
+}
+
+/* 🌈 Tema Pastel Colorido (Pastel Rainbow) */
+[data-theme="pastel-rainbow"] {
+--bg: #0b0f19;         /* Azul espacial extremamente escuro */
+  --card: #161c2e;       /* Cartões em azul meia-noite profundo */
+  --text: #00ffcc;       /* Texto principal em verde neon/ciano elétrico */
+  --text-muted: #6f80a5; /* Azul acinzenzado para informações secundárias */
+  --border: #222f4d;     /* Bordas tecnológicas discretas */
+  --skoob-blue: #ff007f; /* Rosa choque/Neon para botões de ação e destaque */
+  --btn-text: #ffffff;
+}
+
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* --- HEADER --- */
+header { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 20px; }
+.nav-container { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+header h1 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+header h1 span { color: var(--skoob-blue); }
+.palette-selector { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; }
+
+/* --- BOTÕES DO HEADER (Adicione este bloco) --- */
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaçamento entre os botões */
+}
+
+.header-buttons button {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px; /* Ajuste o tamanho do emoji se precisar */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efeito de passar o mouse nos botões */
+.header-buttons button:hover {
+  border-color: var(--skoob-blue);
+  background: var(--card);
+  transform: translateY(-1px); /* Um leve efeito de flutuar */
+}
+
+/* Efeito de clique */
+.header-buttons button:active {
+  transform: translateY(0);
+}
+
+/* --- GRID TRIPLICE (FILTROS | CONTEÚDO | GRÁFICOS) --- */
+.main-wrapper { max-width: 1440px; margin: 15px auto; display: grid; grid-template-columns: 240px 1fr 280px; gap: 15px; padding: 0 15px; }
+
+.sidebar { display: flex; flex-direction: column; gap: 15px; }
+.box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 15px; height: fit-content; }
+.box h3 { margin: 0 0 12px 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+
+/* FILTROS */
+.filter-group { margin-bottom: 14px; }
+.filter-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; color: var(--text-muted); }
+.filter-group input, .filter-group select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); box-sizing: border-box; font-size: 13px; outline: none; }
+
+/* BOTÕES SELECIONÁVEIS (CHIPS) */
+.btn-group { display: flex; flex-wrap: wrap; gap: 4px; }
+.btn-filter { 
+  background: var(--bg); 
+  border: 1px solid var(--border); 
+  color: var(--text); 
+  padding: 5px 8px; 
+  border-radius: 6px; 
+  font-size: 11px; 
+  font-weight: 500; 
+  cursor: pointer; 
+  transition: all 0.2s;
+}
+.btn-filter:hover { border-color: var(--skoob-blue); }
+.btn-filter.active { background: var(--skoob-blue); color: #fff; border-color: var(--skoob-blue); }
+/* --- ESTILIZAÇÃO DOS BOTÕES --- */
+.btn-primary {
+  background-color: var(--skoob-blue);
+  color: var(--btn-text);
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  /* Escurece ou clareia levemente o botão no hover de forma automática */
+  filter: brightness(0.9);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.clear-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--border); color: var(--text-muted); font-weight: 600; border-radius: 6px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+.clear-btn:hover { border-color: var(--skoob-blue); color: var(--skoob-blue); }
+
+/* ESTANTE DE LIVROS */
+.content-area { display: flex; flex-direction: column; gap: 15px; }
+.feed-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.feed-title { font-size: 15px; font-weight: 700; }
+.year-section { margin-bottom: 20px; }
+.year-header { font-size: 18px; font-weight: 800; color: var(--text); margin: 10px 0; display: flex; align-items: center; gap: 10px; }
+.year-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.books-grid { display: grid; grid-template-columns: repeat(auto-fill, 140px); gap: 0; }
+
+/* CARD DO LIVRO */
+.book-item { display: flex; flex-direction: column; background: var(--card); padding: 8px; position: relative; width: 135px; box-sizing: border-box; }
+.cover-wrap { width: 130px; height: 190px; background: var(--bg); border-radius: 4px; overflow: hidden; position: relative; margin: 0 auto; }
+.cover-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.book-genre { 
+  font-size: 9px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+  text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; padding: 1px;
+}
+
+/* METATAGS CLICÁVEIS */
+.meta-tags { display: flex; gap: 5px; justify-content: center; position: absolute; bottom: 4px; left: 4px; right: 4px; }
+.tag-item { font-size: 10px; font-weight: 550; background: rgba(255, 255, 255, 0.8); color: #000000; padding: 2px 5px; border-radius: 3px; text-transform: uppercase; cursor: pointer;}
+.tag-item:hover { opacity: 0.8; }
+
+.book-details { padding-top: 6px; text-align: center; display: flex; flex-direction: column; gap: 1px; }
+.book-title { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.book-author { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.book-rating { align-self: center; color: #ffb800; font-size: 22px; font-weight: bold; margin-top: 2px; }
+.fav-heart { position: absolute; top: 12px; right: 2px; color: rgb(241, 106, 196); font-size: 20px; display: flex; align-items: center; justify-content: center; z-index: 2; cursor: pointer; }
+
+/* PAGINAÇÃO */
+.pagination { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); }
+.pagination-controls { display: flex; gap: 4px; }
+.page-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 11px; }
+.page-btn:hover:not(:disabled) { background: var(--skoob-blue); color: #fff; }
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* COLUNA DA DIREITA (ANALYTICS) */
+.analytics-column { display: flex; flex-direction: column; gap: 15px; }
+.mini-stat { display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+.mini-stat span:last-child { font-weight: 700; color: var(--skoob-blue); }
+
+/* COMPONENTES DE GRÁFICOS EM CSS/SVG Puros */
+.chart-container { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.bar-lbl { width: 45px; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--skoob-blue); border-radius: 4px;}
+.bar-val { width: 25px; font-weight: bold; font-size: 10px; }
+
+@media (max-width: 1100px) { .main-wrapper { grid-template-columns: 1fr; } .analytics-column { order: -1; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <h1>Reading<span>pedia</span></h1>
+  <div class="header-buttons">
+    <button id="index">📋</button>
+    <button id="tables">📅</button>
+    <button id="flashs">📖</button>
+    <button id="metrics">🌼</button>
+<select id="themeSelector" class="palette-selector">
+  <option value="default">🌊</option>
+  <option value="light-dark-academia">📚</option>
+  <option value="dark-academia">📜</option>
+  <option value="veludo">🍷</option>
+  <option value="pastel-rainbow">🌈</option>
+</select>
+  </div>
+</header>
+
+<div class="main-wrapper">
+  <aside class="sidebar">
+    <div class="box">
+      <h3>Filtros & Busca</h3>
+      <div class="filter-group">
+        <label>Pesquisa</label>
+        <input id="q" type="search" placeholder="Título ou autor...">
+      </div>
+      
+      <div class="filter-group">
+        <label>Ano</label>
+        <div id="yearGroup" class="btn-group">
+          <button class="btn-filter active" onclick="selectBtnFilter('year', '')">Todos</button>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label>Mês</label>
+        <div id="monthGroup" class="btn-group">
+          <button class="btn-filter active" onclick="selectBtnFilter('month', '')">Todos</button>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label>Linguagem</label>
+        <div id="langGroup" class="btn-group">
+          <button class="btn-filter active" onclick="selectBtnFilter('lang', '')">Todas</button>
+          <button class="btn-filter" onclick="selectBtnFilter('lang', 'PT')">PT</button>
+          <button class="btn-filter" onclick="selectBtnFilter('lang', 'IN')">IN</button>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label>Formato</label>
+        <div id="formatGroup" class="btn-group">
+          <button class="btn-filter active" onclick="selectBtnFilter('format', '')">Todos</button>
+          <button class="btn-filter" onclick="selectBtnFilter('format', 'K')">Kindle</button>
+          <button class="btn-filter" onclick="selectBtnFilter('format', 'F')">Físico</button>
+        </div>
+      </div>
+      
+      <!-- O filtro 'tag' da barra lateral foi removido daqui -->
+      
+      <div class="filter-group">
+        <label>Favoritos</label>
+        <div id="favGroup" class="btn-group">
+          <button class="btn-filter active" onclick="selectBtnFilter('fav', '')">Todos</button>
+          <button class="btn-filter" onclick="selectBtnFilter('fav', 'YES')">❤︎</button>
+          <button class="btn-filter" onclick="selectBtnFilter('fav', 'NO')">✘</button>
+        </div>
+      </div>
+      
+      <button id="clear" class="clear-btn">Limpar Filtros</button>
+    </div>
+  </aside>
+
+  <main class="content-area">
+    <div class="box" style="padding: 15px; width:100%; box-sizing: border-box;">
+      <div class="feed-header">
+        <div class="feed-title" id="feedTitle">Livros</div>
+        <select id="perPage" style="width: auto; padding: 5px; font-size: 12px;">
+          <option value="10" selected>10 por pág.</option>
+          <option value="15">15 por pág.</option>
+          <option value="20">20 por pág.</option>
+        </select>
+      </div>
+
+      <div id="cards"></div>
+
+      <div class="pagination" id="paginationBlock">
+        <span id="pageInfo">Mostrando 0-0 de 0</span>
+        <div class="pagination-controls">
+          <button class="page-btn" id="prevPage">Anterior</button>
+          <button class="page-btn" id="nextPage">Próximo</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="analytics-column">
+    <div class="box" style="width: 100%; box-sizing:border-box;">
+      <h3>Estatísticas Gerais</h3>
+      <div class="mini-stat"><span>Total Livros:</span><span id="an-count">-</span></div>
+      <div class="mini-stat"><span>Total Páginas:</span><span id="an-pages">-</span></div>
+      <div class="mini-stat"><span>Nota Média:</span><span id="an-rating">-</span></div>
+      <div class="mini-stat"><span>❤︎</span><span id="an-fav">-</span></div>
+      <div class="mini-stat"><span>★★★★★</span><span id="an-five">-</span></div>
+      <div class="mini-stat"><span>F/K</span><span id="an-media-fk">-</span></div>
+      <div class="mini-stat"><span>PT/IN</span><span id="an-media-lang">-</span></div>
+      <div class="mini-stat" style="border:none; font-size:10px; flex-direction:column; gap:2px; padding-top:8px;">
+        <div><b>Maior Livro lido:</b> <span id="an-max" style="float:right; font-weight:bold; color:var(--skoob-blue)">-</span></div>
+        <div><b>Menor Livro lido:</b> <span id="an-min" style="float:right; font-weight:bold; color:var(--skoob-blue)">-</span></div>
+      </div>
+    </div>
+
+    <div class="box" style="width: 100%; box-sizing:border-box;">
+      <h3>Livros por Ano</h3>
+      <div id="chart-ano" class="chart-container"></div>
+    </div>
+
+    <div class="box" style="width: 100%; box-sizing:border-box;">
+      <h3>Livros por Mês</h3>
+      <div id="chart-mes" class="chart-container"></div>
+    </div>
+
+    <div class="box" style="width: 100%; box-sizing:border-box;">
+      <h3>Média Páginas / Ano</h3>
+      <div id="chart-pags-ano" class="chart-container"></div>
+    </div>
+
+    <div class="box" style="width: 100%; box-sizing:border-box;">
+      <h3>Média Notas / Ano</h3>
+      <div id="chart-notas-ano" class="chart-container"></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const mesesOrdem = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const state = { 
+  data: [], 
+  filtered: [], 
+  q:"", 
+  year:"", 
+  month:"", 
+  fav:"", 
+  lang:"", 
+  format:"",
+  tag:"", // Mantido no estado interno do app para permitir o clique
+  currentPage: 1, 
+  itemsPerPage: 10, 
+  isFiltered: false 
+};
+
+fetch("./books.json")
+  .then(r => {
+    if (!r.ok) throw new Error("Falha ao abrir arquivo");
+    return r.json();
+  })
+  .then(d => { 
+    state.data = d; 
+    init(); 
+  });
+
+function init() {
+  // Gerar botões de Ano dinamicamente
+  const yearGroup = document.getElementById("yearGroup");
+  const anosUnicos = [...new Set(state.data.map(d => d.YEAR))].filter(Boolean).sort((a, b) => b - a);
+  anosUnicos.forEach(y => {
+    yearGroup.innerHTML += `<button class="btn-filter" data-val="${y}" onclick="selectBtnFilter('year', '${y}')">${y}</button>`;
+  });
+
+  // Gerar botões de Mês dinamicamente
+  const monthGroup = document.getElementById("monthGroup");
+  mesesOrdem.forEach(m => {
+    monthGroup.innerHTML += `<button class="btn-filter" data-val="${m}" onclick="selectBtnFilter('month', '${m}')">${m.slice(0,3)}</button>`;
+  });
+
+  applyFilters();
+}
+
+function selectBtnFilter(type, value) {
+  state[type] = value;
+  
+  let containerId = "";
+  if(type === "year") containerId = "yearGroup";
+  if(type === "month") containerId = "monthGroup";
+  if(type === "lang") containerId = "langGroup";
+  if(type === "format") containerId = "formatGroup";
+  if(type === "fav") containerId = "favGroup";
+
+  // Se for um tipo com botões físicos na tela, atualiza a classe active
+  if(containerId) {
+    const buttons = document.querySelectorAll(`#${containerId} .btn-filter`);
+    buttons.forEach(btn => {
+      btn.classList.remove("active");
+      if(value === "" && (btn.textContent === "Todos" || btn.textContent === "Todas")) {
+        btn.classList.add("active");
+      } else if (btn.getAttribute("data-val") === value || btn.textContent === value || (value === "K" && btn.textContent === "Kindle") || (value === "F" && btn.textContent === "Físico")) {
+        btn.classList.add("active");
+      }
+    });
+  }
+
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = state.q.toLowerCase();
+  
+  state.isFiltered = (
+    q !== "" || state.year !== "" || state.month !== "" || 
+    state.fav !== "" || state.lang !== "" || state.format !== "" || state.tag !== ""
+  );
+
+  state.filtered = state.data.filter(b => 
+    (!q || b.TITLE.toLowerCase().includes(q) || b.AUTHOR.toLowerCase().includes(q) || (b.TAG && b.TAG.toLowerCase().includes(q))) &&
+    (!state.year || String(b.YEAR) === state.year) &&
+    (!state.month || b.MONTH === state.month) &&
+    (!state.lang || b.LANGUAGE === state.lang) &&
+    (!state.format || b.FORMAT === state.format) &&
+    (!state.fav || b.FAV === state.fav) &&
+    (!state.tag || b.TAG1 === state.tag || b.TAG2 === state.tag || b.TAG3 === state.tag)
+  ).sort((a, b) => state.data.indexOf(b) - state.data.indexOf(a));
+
+  document.getElementById("paginationBlock").style.display = state.isFiltered ? "none" : "flex";
+  state.currentPage = 1;
+  render();
+}
+
+function render() {
+  const total = state.filtered.length;
+  
+  const totalPagesSum = state.filtered.reduce((a,b)=>a+(+b.PAGES||0),0);
+  const totalFavs = state.filtered.filter(b=>b.FAV==="YES").length;
+  const totalFives = state.filtered.filter(b=>+b.RATING===5).length;
+  const countKindle = state.filtered.filter(b=>b.FORMAT==="K").length;
+  const countFisico = state.filtered.filter(b=>b.FORMAT==="F").length;
+  const countPT = state.filtered.filter(b=>b.LANGUAGE==="PT").length;
+  const countIN = state.filtered.filter(b=>b.LANGUAGE==="IN").length;
+  
+  const pagsLista = state.filtered.map(b => +b.PAGES || 0).filter(p => p > 0);
+  const maxPag = pagsLista.length ? Math.max(...pagsLista) : 0;
+  const minPag = pagsLista.length ? Math.min(...pagsLista) : 0;
+
+  document.getElementById("an-count").textContent = total.toLocaleString('pt-BR');
+  document.getElementById("an-pages").textContent = totalPagesSum.toLocaleString('pt-BR');
+  document.getElementById("an-rating").textContent = total ? (state.filtered.reduce((a,b)=>a+(+b.RATING||0),0)/total).toFixed(2) : "0.0";
+  document.getElementById("an-fav").textContent = totalFavs.toLocaleString('pt-BR');
+  document.getElementById("an-five").textContent = totalFives.toLocaleString('pt-BR');
+  document.getElementById("an-media-fk").textContent = `${countFisico} F / ${countKindle} K`;
+  document.getElementById("an-media-lang").textContent = `${countPT} PT / ${countIN} IN`;
+  document.getElementById("an-max").textContent = maxPag ? `${maxPag.toLocaleString('pt-BR')} p.` : "-";
+  document.getElementById("an-min").textContent = minPag ? `${minPag.toLocaleString('pt-BR')} p.` : "-";
+
+  let pageItems = state.filtered;
+  if (!state.isFiltered) {
+    const start = (state.currentPage - 1) * state.itemsPerPage;
+    pageItems = state.filtered.slice(start, start + state.itemsPerPage);
+    const endCount = Math.min(start + state.itemsPerPage, total);
+    document.getElementById("pageInfo").textContent = total > 0 ? `Mostrando ${start + 1}–${endCount} de ${total}` : "0-0 de 0";
+    document.getElementById("prevPage").disabled = state.currentPage === 1;
+    document.getElementById("nextPage").disabled = state.currentPage === (Math.ceil(total / state.itemsPerPage) || 1);
+  }
+
+  const groupedByYear = {};
+  pageItems.forEach(b => {
+    if(!groupedByYear[b.YEAR]) groupedByYear[b.YEAR] = [];
+    groupedByYear[b.YEAR].push(b);
+  });
+
+  const container = document.getElementById("cards");
+  container.innerHTML = total === 0 ? "<div style='text-align:center; padding:30px; color:var(--text-muted); font-size:13px;'>Nenhum livro localizado para os critérios aplicados.</div>" : "";
+
+  Object.keys(groupedByYear).sort((a,b)=>b-a).forEach(y => {
+    let html = `<section class="year-section"><h2 class="year-header">${y}</h2><div class="books-grid">`;
+    
+    groupedByYear[y].forEach(b => {
+      const pFormatado = (+b.PAGES || 0).toLocaleString('pt-BR');
+      const estrelas = "★".repeat(Math.floor(b.RATING)) + (b.RATING % 1 !== 0 ? "☆" : "");
+      const tagsFiltro = [b.TAG1, b.TAG2, b.TAG3].filter(Boolean);
+      
+      const coresTags = {
+        "Romance": "#F8BBD0", "Monster": "#E1BEE7", "NSFW": "#F06292", "LGBTQ+": "#F48FB1", "Ficção de Cura": "#FFCCBC", "Contemporâneo": "#FFAB91",
+        "Fantasia": "#CE93D8", "Mitologia": "#B39DDB", "De Época": "#D1C4E9", "Clássico": "#C5CAE9",
+        "Drama": "#FFCC80", "Sociais": "#FFE082", "Psicologia": "#FFAB40", "De Formação": "#FFD54F",
+        "Terror": "#EF9A9A", "Gore": "#E57373", "Thriller": "#9FA8DA", "Suspense": "#90CAF9", "Mistério": "#B0BEC5", "Crime": "#CFD8DC",
+        "SciFi": "#80DEEA", "Distopia": "#80CBC4", "Física": "#4DD0E1", "Política": "#B2EBF2",
+        "Aventura": "#A5D6A7", "Faroeste": "#C8E6C9", "Guerra": "#DCEDC8", "Histórico": "#D7CCC8", "Ficção Histórica": "#BCAAA4", "História": "#D7CCC8",
+        "Não Ficção": "#C5E1A5", "Biografia": "#E6EE9C", "Filosofia": "#AED581",
+        "Juvenil": "#FFF59D", "Poesia": "#FCE4EC", "Sátira": "#FFF176", "Contos": "#E0F2F1",
+        "Mangá": "#F06292", "Graphic Novel": "#BA68C8"
+      };
+      
+      html += `
+        <div class="book-item">
+          ${b.FAV==="YES" ? '<div class="fav-heart" onclick="quickFilter(\'fav\',\'YES\')">❤︎⁠</div>' : ''}
+          <div class="book-rating">${estrelas}</div>
+          <div class="cover-wrap">
+            <img src="${b.CAPA || 'https://via.placeholder.com/135x190/1e293b/fff?text='+encodeURIComponent(b.TITLE)}" alt="Capa" loading="lazy">
+            <div class="meta-tags">
+              <span class="tag-item" onclick="quickFilter(\'month\',\'${b.MONTH}\')">${b.MONTH.slice(0,3)}</span>
+              <span class="tag-item">${pFormatado}</span>
+              <span class="tag-item" onclick="quickFilter(\'format\',\'${b.FORMAT}\')">${b.FORMAT === 'K' ? 'K' : 'F'}</span>
+            </div>
+          </div>
+          <div class="book-details">
+            <div class="book-title" title="${b.TITLE}">${b.TITLE}</div>
+            <div class="book-author" title="${b.AUTHOR}">${b.AUTHOR}</div>
+            <div>
+              ${tagsFiltro.map(t => {
+                const corFundo = coresTags[t];
+                return `<span class="book-genre" style="color: ${corFundo};" title="Filtrar tag: ${t}" onclick="quickFilter('tag','${t}')">${t}</span>`;
+              }).join('')}
+            </div>
+          </div>
+        </div>`;
+    });   
+    html += `</div></section>`;
+    container.innerHTML += html;
+  });
+
+  document.getElementById("feedTitle").textContent = state.isFiltered ? `Resultados Filtrados (${total})` : `Livros Concluídos (${total})`;
+  renderCharts();
+}
+
+function renderCharts() {
+  const dataForCharts = state.filtered;
+
+  const anosMap = {};
+  dataForCharts.forEach(b => { if(b.YEAR) anosMap[b.YEAR] = (anosMap[b.YEAR] || 0) + 1; });
+  buildBarChart("chart-ano", anosMap);
+
+  const mesesMap = {};
+  mesesOrdem.forEach(m => mesesMap[m] = 0);
+  dataForCharts.forEach(b => { if(b.MONTH) mesesMap[b.MONTH] = (mesesMap[b.MONTH] || 0) + 1; });
+  buildBarChart("chart-mes", mesesMap, true);
+
+  const pagsAnoMap = {}, countAnoMap = {};
+  dataForCharts.forEach(b => {
+    if(b.YEAR && b.PAGES) {
+      pagsAnoMap[b.YEAR] = (pagsAnoMap[b.YEAR] || 0) + (+b.PAGES);
+      countAnoMap[b.YEAR] = (countAnoMap[b.YEAR] || 0) + 1;
+    }
+  });
+  const medPagsAno = {};
+  Object.keys(pagsAnoMap).forEach(y => medPagsAno[y] = Math.round(pagsAnoMap[y] / countAnoMap[y]));
+  buildBarChart("chart-pags-ano", medPagsAno);
+
+  const notasAnoMap = {}, countNotasAnoMap = {};
+  dataForCharts.forEach(b => {
+    if(b.YEAR && b.RATING) {
+      notasAnoMap[b.YEAR] = (notasAnoMap[b.YEAR] || 0) + (+b.RATING);
+      countNotasAnoMap[b.YEAR] = (countNotasAnoMap[b.YEAR] || 0) + 1;
+    }
+  });
+  const medNotasAno = {};
+  Object.keys(notasAnoMap).forEach(y => medNotasAno[y] = (notasAnoMap[y] / countNotasAnoMap[y]).toFixed(1));
+  buildBarChart("chart-notas-ano", medNotasAno, false, true);
+}
+
+function buildBarChart(containerId, dataMap, checkMonths = false, isRating = false) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+  
+  const keys = Object.keys(dataMap).sort((a,b) => checkMonths ? mesesOrdem.indexOf(a) - mesesOrdem.indexOf(b) : b - a);
+  const values = Object.values(dataMap);
+  const maxVal = values.length ? Math.max(...values.map(v => parseFloat(v))) : 1;
+
+  let hasData = values.reduce((a,b)=>a+parseFloat(b), 0) > 0;
+  if(!hasData) { container.innerHTML = "<div style='font-size:10px; color:var(--text-muted);'>Sem dados no escopo.</div>"; return; }
+
+  keys.forEach(k => {
+    const val = dataMap[k];
+    if(checkMonths && val === 0) return;
+    const pct = ((parseFloat(val) / maxVal) * 100).toFixed(1);
+    
+    container.innerHTML += `
+      <div class="bar-row">
+        <div class="bar-lbl" title="${k}">${checkMonths ? k.slice(0,3) : k}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: ${pct}%"></div>
+        </div>
+        <div class="bar-val">${val}${isRating ? '★' : ''}</div>
+      </div>`;
+  });
+}
+
+function quickFilter(type, value) {
+  selectBtnFilter(type, value);
+}
+
+document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; applyFilters(); });
+document.getElementById("perPage").addEventListener("change", e => { state.itemsPerPage = +e.target.value; state.currentPage = 1; render(); });
+
+document.getElementById("clear").addEventListener("click", () => {
+  document.getElementById("q").value = "";
+  
+  // Reseta todos os botões e estados para o padrão inicial
+  selectBtnFilter('year', '');
+  selectBtnFilter('month', '');
+  selectBtnFilter('lang', '');
+  selectBtnFilter('format', '');
+  selectBtnFilter('fav', '');
+  state.tag = ''; // Limpa a tag ativa interna
+  applyFilters();
+});
+
+["index","flashs","tables","form","reading", "authors"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
+});
+
+
+document.getElementById("prevPage").addEventListener("click", () => { if(state.currentPage > 1) { state.currentPage--; render(); } });
+document.getElementById("nextPage").addEventListener("click", () => { if(state.currentPage < Math.ceil(state.filtered.length/state.itemsPerPage)) { state.currentPage++; render(); } });
+document.getElementById("themeSelector").addEventListener("change", e => document.documentElement.setAttribute("data-theme", e.target.value === "default" ? "" : e.target.value));
+</script>
+</body>
+</html>

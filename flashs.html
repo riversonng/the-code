@@ -376,7 +376,7 @@ small{font-size:13px;color:var(--muted)}
 
 <body>
 <header>
-  <h1>Cards</h1>
+  <h1>Readingpedia</h1>  
 <div class="header-buttons">
 
   <select id="yearSelect">
@@ -407,14 +407,13 @@ small{font-size:13px;color:var(--muted)}
   <button id="resetBtn">🔄</button>
   <button id="saveStoryBtn">📸</button>
   
-</div>
-  <div class="header-buttons">
-    <button id="index">📋</button>
-    <button id="tables">📅</button>
-    <button id="flashs">📖</button>
-    <button id="form">↳↰</button>
 
-  </div>
+  <div class="header-buttons">
+    <button id="index">📊</button>
+    <button id="tables">📝</button>
+    <button id="flashs">📅</button>
+    <button id="metrics">🌼</button>
+    <button id="story">👁️‍🗨️</button>
 </header>
 
 <section id="flashback-container"></section>
@@ -587,11 +586,11 @@ block.innerHTML = `
   <div class="card genero-metricas">
     <div class="grupo">
       <span class="label">
-        Gêneros + longos</span><div class="lista">        ${maioresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
+        Média + longos</span><div class="lista">        ${maioresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
       </div>
     </div>
     <div class="grupo">      <span class="label">
-      Gêneros + curtos</span>      <div class="lista">        ${menoresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
+      Média + curtos</span>      <div class="lista">        ${menoresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${fmt(p)} pgs</span></div>`).join("")}
       </div>
     </div>
   </div>
@@ -696,14 +695,14 @@ block.className = `flashback-block year-${year}`;
 
   <div class="card genero-metricas">
     <div class="grupo">
-      <span class="label">Gêneros + longos</span>
+      <span class="label">Média + longos</span>
       <div class="lista">
         ${maioresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${p} pgs</span></div>`).join("")}
       </div>
     </div>
 
     <div class="grupo">
-      <span class="label">Gêneros + curtos</span>
+      <span class="label">Média + curtos</span>
       <div class="lista">
         ${menoresGeneros.map(([g,p]) => `<div class="item"><span class="nome">${g}</span><span class="valor">${p} pgs</span></div>`).join("")}
       </div>
@@ -762,9 +761,10 @@ document.getElementById("resetBtn").onclick = () => {
 };
 
 
-["index","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","story","metrics"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
+
 
 </script>
 

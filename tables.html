@@ -298,10 +298,11 @@ td {
 <header>
   <h1>Mapa de Gêneros</h1>
   <div class="header-buttons">
-    <button id="index">📋</button>
-    <button id="tables">📅</button>
-    <button id="flashs">📖</button>
-        <button id="form">↳↰</button>
+    <button id="index">📊</button>
+    <button id="tables">📝</button>
+    <button id="flashs">📅</button>
+    <button id="story">👁️‍🗨️</button>
+    <button id="metrics">🌼</button>
 </header>
 <div class="tabs" id="tabsContainer"></div>
 <div id="containerAnos"></div>
@@ -360,21 +361,54 @@ const container = document.getElementById("containerAnos");
 // CORES FIXAS PARA TAG1 (GÊNERO PRINCIPAL)
 // =====================================================
 
-const coresTag1 = {
-  "Romance": "#E75480",
-  "Drama": "#9333EA",
-  "Fantasia": "#3B82F6",
-  "Mistério": "#0F172A",
-  "Suspense": "#DC2626",
-  "Terror": "#111827",
-  "SciFi": "#06B6D4",
-  "Distopia": "#475569",
-  "Histórico": "#F59E0B",
-  "Biografia": "#FEF3C7",
-  "Não Ficção": "#6B7280",
-  "Graphic Novel": "#10B981",
-  "Mangá": "#F97316",
-  "Ficção de Cura": "#E9D5FF"
+const coresTag1 = coresTag2 = {
+  "Romance": "#e44356",
+  "NSFW": "#740e17",
+  "LGBTQ+": "#ad1457",
+  "Drama": "#da853f",
+
+  "Fantasia": "#5b4db2",
+  "Terror": "#6b3fa0",
+  "Mitologia": "#8e44ad",
+  "Monster": "#5e35b1",
+  "Thriller": "#4a3fb3",
+  "Gore": "#3e0757",
+
+  "Mistério": "#3f51b5",
+  "SciFi": "#0b9eac",
+  "Distopia": "#455a64",
+  "Política": "#3949ab",
+  "Física": "#0277bd",
+
+  "Não Ficção": "#2e7d32",
+  "Ficção de Cura": "#00796b",
+  "Juvenil": "#43a047",
+  "Sociais": "#689f38",
+  "Psicologia": "#2e7d32",
+
+  "Aventura": "#f57c00",
+  "Suspense": "#ef6c00",
+  "Crime": "#558b2f",
+  "Faroeste": "#e65100",
+  "Guerra": "#d84315",
+
+  "Histórico": "#6d4c41",
+  "Ficção Histórica": "#5d4037",
+  "História": "#6d4c41",
+  "Clássico": "#546e7a",
+  "De Época": "#bf360c",
+
+  "Poesia": "#8e24aa",
+  "Contemporâneo": "#b23a48",
+  "Sátira": "#f9a825",
+  "Contos": "#ff8f00",
+
+  "Mangá": "#d81b60",
+  "Graphic Novel": "#5e35b1",
+
+  "Biografia": "#f9a825",
+  "Filosofia": "#512da8",
+  "De Formação": "#00695c"
 };
 
 
@@ -382,7 +416,6 @@ const coresTag1 = {
 // CORES DINÂMICAS PARA TAG2 (SUBGÊNERO)
 // =====================================================
 
-const coresTag2 = {};
 
 function gerarCorDeterministica(texto){
   let hash = 0;
@@ -463,7 +496,6 @@ for(let ano = anoAtual; ano >= anoInicial; ano--){
     total += livrosMes.length;
 
     let linha = `<tr><td>${mesesNomes[m]}</td>`;
-
 for(let c=0;c<maxColunasPadrao;c++){
   if(livrosMes[c]){
     const livro = livrosMes[c];
@@ -471,38 +503,36 @@ for(let c=0;c<maxColunasPadrao;c++){
     const tag1 = (livro.TAG1);
     const tag2 = (livro.TAG2);
 
-    const corBase = coresTag1[tag1] || "#E5E7EB"; // TAG1
-    const corSub = corParaTag2(tag2) || corBase;   // TAG2
+    const corBase = coresTag1[tag1] || "#E5E7EB";
+    const corSub = corParaTag2(tag2) || corBase;
 
-    // Gradient: TAG1 primeiro, TAG2 sobrepondo
-    let backgroundStyle = tag2
-      ? `linear-gradient(135deg, ${corBase} 0%, ${corBase} 55%, ${corSub} 55%, ${corSub} 100%)`
-      : corBase;
-
-    linha += `<td 
-                style="background:${backgroundStyle}" 
-                title="${livro.TITLE} - ${tag1}${tag2 ? " / "+tag2 : ""}">
-              </td>`;
-  } else {
-    linha += `<td style="background:${paleta.corSuave}"></td>`;
-  }
+linha += `<td 
+    style="
+      position: relative;
+      background: ${tag2 
+        ? `linear-gradient(135deg, ${corBase} 70%, ${corSub} 20%)` 
+        : corBase};
+    " 
+    title="${livro.TITLE} - ${tag1}${tag2 ? " / " + tag2 : ""}">
+  </td>`;
+} else {
+  linha += `<td style="background:${paleta.corSuave}"></td>`;
+}
 }
 
-    linha += "</tr>";
-    tabelaMeses.innerHTML += linha;
-  });
+linha += "</tr>";
+tabelaMeses.innerHTML += linha;
+});
 
-  tabelaMeses.innerHTML += `
-    <tr>
-      <td colspan="${maxColunasPadrao+1}" 
-          style="text-align:left; font-size:12px; padding:6px;">
-          Cada quadrado = 1 leitura | Total: ${total} leituras
-      </td>
-    </tr>
-  `;
-
+tabelaMeses.innerHTML += `
+  <tr>
+    <td colspan="${maxColunasPadrao+1}" 
+        style="text-align:left; font-size:12px; padding:6px;">
+        Cada quadrado = 1 leitura | Total: ${total} leituras
+    </td>
+  </tr>
+`;
   content.appendChild(tabelaMeses);
-
 
 
 // =====================================================
@@ -540,36 +570,7 @@ grupoTag1.appendChild(titulo1);
 grupoTag1.appendChild(itens1);
 legendaContainer.appendChild(grupoTag1);
 
-// ===== TAG2 =====
-if (Object.keys(coresTag2).length) {
 
-  const grupoTag2 = document.createElement("div");
-  grupoTag2.className = "legend-group";
-
-  const titulo2 = document.createElement("div");
-  titulo2.className = "legend-title";
-  titulo2.textContent = "Subgêneros";
-
-  const itens2 = document.createElement("ul");
-  itens2.className = "legend-items";
-
-  Object.entries(coresTag2).forEach(([nome, cor]) => {
-    const item = document.createElement("li");
-    item.className = "legend-item";
-
-    const box = document.createElement("span");
-    box.className = "legend-color";
-    box.style.background = cor;
-
-    item.appendChild(box);
-    item.appendChild(document.createTextNode(nome));
-    itens2.appendChild(item);
-  });
-
-  grupoTag2.appendChild(titulo2);
-  grupoTag2.appendChild(itens2);
-  legendaContainer.appendChild(grupoTag2);
-}
 
 content.appendChild(legendaContainer);
 
@@ -588,12 +589,10 @@ if(primeiraTab && primeiroConteudo){
 
 });
 
-["index","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","story","metrics"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
-
 
 </script>
 </body>
 </html>
-

@@ -19,7 +19,6 @@
   --chip:#caf5ee;
 }
 
-
 body{
   margin:0;
   background:var(--bg);
@@ -27,87 +26,92 @@ body{
   font-family:Segoe UI,system-ui,sans-serif;
 }
 
-header {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  background: var(--card);
-  border-radius: 0;                     /* sem cantos arredondados */
-  border-bottom: 2px solid var(--border-strong); /* linha inferior */
-  box-shadow: none;                     /* sem sombra */
-  max-width: 1100px;}
-
-header h1 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--accent);
+header{
+  max-width:1300px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 24px;
+  background:var(--card);
+  border-radius:0;
+  border-bottom:2px solid var(--border-strong);
+  box-shadow:none;
 }
 
-.header-buttons {
-  display: flex;
-  gap: 10px;
+header h1{
+  margin:0;
+  font-size:24px;
+  font-weight:700;
+  color:var(--accent);
 }
 
-.header-buttons button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--accent);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+.header-buttons{
+  display:flex;
+  gap:10px;
 }
 
-.header-buttons button:hover {
-  background: color-mix(in srgb, var(--accent) 80%, black);
-  transform: translateY(-2px);
+.header-buttons button{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--accent);
+  border:none;
+  border-radius:8px;
+  color:white;
+  padding:8px 12px;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .2s,transform .2s;
 }
+
+.header-buttons button:hover{
+  background:color-mix(in srgb,var(--accent) 80%,black);
+  transform:translateY(-2px);
+}
+
 .controls{
-  max-width:1100px;
+  max-width:1300px;
   margin:16px auto;
   display:grid;
   grid-template-columns:1fr repeat(6,auto);
   gap:5px;
 }
+
 .controls input,
 .controls select,
 .controls button{
   padding:10px;
   border:1px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg-light);
+  border-radius:10px;
+  background:var(--bg-light);
   cursor:pointer;
   color:var(--text);
 }
+
 .controls button{
   background:var(--accent);
   color:#fff;
   border:none;
 }
+
 .stats{
-  max-width:1100px;
+  max-width:1300px;
   margin:24px auto;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap: 14px;
+  gap:14px;
 }
+
 .stat{
   background:var(--card);
   border:1px solid var(--border);
   padding:16px;
   display:flex;
   flex-direction:column;
-  align-items: center;
-  border-radius:12px;
+  align-items:center;
 }
+
 .stat b{
   font-size:14px;
   font-weight:700;
@@ -116,84 +120,101 @@ header h1 {
   letter-spacing:.04em;
   margin-bottom:6px;
 }
+
 .stat span{
   font-size:14px;
   color:var(--text);
 }
 
-/* GRID UNIFICADO PARA 2X2 */
-.charts-grid {
-  max-width: 1100px;       /* reduz largura total */
-  margin: 5px auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* duas colunas fixas */
-  grid-template-rows: repeat(4, auto);   /* duas linhas */
-  gap: 10px;              /* aumenta o espaço entre os cards */
+.charts-grid{
+  max-width:1300px;
+  margin:5px auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 
-.chart-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px;          /* padding menor */
-  max-width: 250PX;       /* limite de largura para não ficar grande demais */
+.chart-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  max-width:100%;
 }
 
-.chart-card h3 {
-  margin: 0 0 8px;
-  font-size: 14px;        /* título menor */
-  font-weight: 600;
-  color: var(--text);
+.chart-card h3{
+  margin:0 0 8px;
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
 }
 
-.chart-row {
-  display: grid;
-  grid-template-columns: 1fr 3fr auto;
-  gap: 4px;
-  margin-bottom: 6px;
-  align-items: center;
-  font-size: 11px;        /* texto menor */
+.chart-row{
+  display:grid;
+  grid-template-columns:1fr 4fr auto;
+  gap:4px;
+  margin-bottom:6px;
+  align-items:center;
+  font-size:11px;
 }
 
-.chart-label {
-  color: var(--muted);
-  text-align: right;
+.chart-label{
+  color:var(--muted);
+  text-align:right;
 }
 
-.chart-bar-wrap {
-  height: 10px;           /* barra mais fina */
-  background: var(--chip);
-  border-radius: 5px;
-  overflow: hidden;
+.chart-bar-wrap{
+  height:10px;
+  background:var(--chip);
+  border-radius:5px;
+  overflow:hidden;
 }
 
-.chart-bar {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 5px;
+.chart-bar{
+  height:100%;
+  background:var(--accent);
+  border-radius:5px;
 }
 
 .cards-grid{
-  max-width:1100px;
+  max-width:1300px;
   margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:14px;
+  gap:10px;
+  padding:10px;
 }
 
 .card{
+  display:flex;
+  flex-direction:row;
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:16px 18px;
+  overflow:hidden;
+}
+
+.card-cover{
+  flex:0 0 120px;
   display:flex;
-  position:relative;
+}
+
+.card-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.card-text{
+  flex:1;
+  display:grid;
+  gap:6px;
+  padding:16px 18px;
+  color:var(--text);
 }
 
 .title{
   font-weight:600;
   line-height:1.25;
-  padding-right:72px; /* espaço para os ícones */
+  padding-right:72px;
   display:-webkit-box;
   overflow:hidden;
 }
@@ -204,100 +225,86 @@ header h1 {
   color:var(--muted);
 }
 
-/* ===== BASE VISUAL PADRÃO ===== */
 .chip-date,
 .chip-pages,
 .chip-format,
 .chip-lang,
 .tag1,
 .tag2,
-.tag3 {
-  font-size: .75rem;
-  padding: 4px 8px;
-  line-height: 1;
-  white-space: nowrap;
-  border-radius: 12px;
+.tag3{
+  font-size:.75rem;
+  padding:4px 8px;
+  line-height:1;
+  white-space:nowrap;
 }
 
-/* ================================================= */
-/* ================== CHIPS META =================== */
-/* ================================================= */
-
-/* MÊS / ANO */
-.chip-date {
-  background: #fdfac4;
-  color: #868361;
-  cursor: pointer;
+.chip-date{
+  background:#fdfac4;
+  color:#868361;
+  cursor:pointer;
 }
 
-.chip-date:hover {
-  background: color-mix(in srgb, #fffeea 70%, white);
+.chip-date:hover{
+  background:color-mix(in srgb,#fffeea 70%,white);
 }
 
-/* PÁGINAS */
-.chip-pages {
-  background: #eef5ff;
-  color: #3b5ed7;
+.chip-pages{
+  background:#eef5ff;
+  color:#3b5ed7;
 }
 
-/* FORMATO (K / F) */
-.chip-format {
-  background: #f3e8ff;
-  color: #8b5cf6;
-  cursor: pointer;
+.chip-format{
+  background:#f3e8ff;
+  color:#8b5cf6;
+  cursor:pointer;
 }
 
-.chip-format:hover {
-  background: #e9d5ff;
+.chip-format:hover{
+  background:#e9d5ff;
 }
 
-/* LINGUAGEM */
-.chip-lang {
-  background: #e6fffa;
-  color: #0f766e;
-  cursor: pointer;
+.chip-lang{
+  background:#e6fffa;
+  color:#0f766e;
+  cursor:pointer;
 }
 
-.chip-lang:hover {
-  background: #ccfbf1;
+.chip-lang:hover{
+  background:#ccfbf1;
 }
 
-
-/* ================================================= */
-/* ===================== TAGS ====================== */
-/* ================================================= */
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-  cursor: pointer;
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:6px;
+  cursor:pointer;
 }
 
 .rating{
   font-size:1.5rem;
   color:#fcc31a;
-
 }
-.card > div:last-child{
+
+.card>div:last-child{
   display:flex;
   flex-direction:column;
   gap:6px;
 }
 
 .icon-chip.heart{
-  color: #ff5fa2;
-  position: absolute;
+  color:#ff5fa2;
   top:14px;
   right:14px;
 }
+
 .meta-line{
   font-size:.8rem;
   color:var(--text);
   display:flex;
   gap:6px;
 }
+
 #cards{
   display:flex;
   flex-direction:column;
@@ -311,7 +318,7 @@ header h1 {
 
 .year-title{
   font-size:26px;
-  margin: 0px;
+  margin:0;
   font-weight:600;
   color:var(--accent);
 }
@@ -330,153 +337,163 @@ header h1 {
 
 .month-cards{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
 }
 
-
-/* ===== SELECT ESTILIZADO ===== */
-select {
-  appearance: none;                /* remove estilo padrão do navegador */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-color: var(--card);  /* fundo branco dos cards */
-  color: var(--text);             /* cor do texto principal */
-  padding: 10px 40px 10px 12px;   /* espaço interno, deixa margem para ícone */
-  border: 2px solid var(--border-strong); /* borda suave */
-  border-radius: 8px;
-  outline: none;
-  cursor: pointer;
-  transition: border 0.2s, box-shadow 0.2s;
-  position: relative;
+select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  background-color:var(--card);
+  color:var(--text);
+  padding:10px 40px 10px 12px;
+  border:2px solid var(--border-strong);
+  border-radius:8px;
+  outline:none;
+  cursor:pointer;
+  transition:border .2s,box-shadow .2s;
+  background-image:url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23354052' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  background-size:12px;
 }
 
-/* Hover e foco */
-select:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 5px var(--accent-soft);
+select:hover{
+  border-color:var(--accent);
+  box-shadow:0 0 5px var(--accent-soft);
 }
 
-select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 5px var(--accent);
+select:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 5px var(--accent);
 }
 
-/* Ícone de seta customizado */
-select {
-  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23354052' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
+.chip-review{
+  cursor:pointer;
+  background:var(--bg-light);
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:12px;
+  transition:.2s;
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
+.chip-review:hover{
+  background:var(--accent);
+  color:white;
+}
 
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 16px;
+@media(max-width:900px){
+  .charts-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .month-cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 16px;
   }
 
-  .header-buttons {
-    width: 100%;
-    flex-wrap: wrap;
+  .header-buttons{
+    width:100%;
+    flex-wrap:wrap;
   }
 
-  .header-buttons button {
-    flex: 1;
-    justify-content: center;
+  .header-buttons button{
+    flex:1;
+    justify-content:center;
   }
 
-  /* filtros empilhados */
-  .controls {
-    grid-template-columns: 1fr;
-    padding: 0 16px;
+  .controls{
+    grid-template-columns:1fr;
+    padding:0 16px;
   }
 
   .controls input,
   .controls select,
-  .controls button {
-    width: 100%;
+  .controls button{
+    width:100%;
   }
 
-  /* stats mais compactos */
-  .stats {
-    padding: 0 16px;
-    grid-template-columns: repeat(2, 1fr);
+  .stats{
+    padding:0 16px;
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .stat {
-    padding: 12px;
+  .stat{
+    padding:12px;
   }
 
-  /* gráficos em coluna única */
-  .charts-grid {
-    grid-template-columns: 1fr;
-    padding: 0 16px;
+  .charts-grid{
+    grid-template-columns:1fr;
+    padding:0 16px;
   }
 
-  .chart-card {
-    max-width: 100%;
+  .chart-card{
+    max-width:100%;
   }
 
-  /* cards ocupando largura total */
-  .month-cards {
-    grid-template-columns: 1fr;
+  .month-cards{
+    grid-template-columns:1fr;
   }
 
-  .cards-grid {
-    padding: 0 16px;
+  .cards-grid{
+    padding:0 16px;
   }
 
-  .year-title {
-    font-size: 22px;
+  .year-title{
+    font-size:22px;
   }
 
-  .month-title {
-    font-size: 16px;
-  }
-  /* ===== STORYS MOBILE ===== */
-
-  .flashback {
-    grid-template-columns: 1fr !important;
+  .month-title{
+    font-size:16px;
   }
 
-  .card {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
+  .flashback{
+    grid-template-columns:1fr!important;
   }
 
-  .card img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+  .card{
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
   }
 
-  .favorites {
-    columns: 1 !important;
+  .card img{
+    width:100%;
+    height:auto;
+    object-fit:cover;
+  }
+
+  .favorites{
+    columns:1!important;
   }
 
   .bars-vertical,
-  .month-chart {
-    height: 120px;
+  .month-chart{
+    height:120px;
   }
 }
+
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Gráficos de Leitura</h1>
+  <h1>Readingpedia</h1>
   <div class="header-buttons">
-    <button id="index">📋</button>
-    <button id="tables">📅</button>
-    <button id="flashs">📖</button>
-        <button id="form">↳↰</button>
-
+    <button id="index">📊</button>
+    <button id="tables">📝</button>
+    <button id="flashs">📅</button>
+    <button id="story">👁️‍🗨️</button>
+    <button id="metrics">🌼</button>
 </header>
 
 <div class="controls">
@@ -489,7 +506,6 @@ select {
     <option value="K">Kindle</option>
     <option value="F">Físico</option>
   </select>
-    <button id="saveStories">📸</button>
       <button id="clear">↻</button>
 </div>
 
@@ -517,184 +533,8 @@ select {
   <div id="cards" class="cards-grid"></div>
 </section>
 
-
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-async function saveMonthAsStory(year, monthBlock, monthName) {
 
-  const filteredData = state.data.filter(
-    b => String(b.YEAR) === String(year) &&
-         String(b.MONTH).toLowerCase() === monthName.toLowerCase()
-  );
-
-const cards = Array.from(monthBlock.querySelectorAll(".card")).reverse();
-
-  const MAX_CARDS_PER_PAGE = 10; // ajuste se quiser
-  const totalPages = Math.ceil(cards.length / MAX_CARDS_PER_PAGE);
-
-  for (let page = 0; page < totalPages; page++) {
-
-    const story = document.createElement("div");
-    story.style.width = "1080px";
-    story.style.height = "1920px";
-    story.style.background = getComputedStyle(document.documentElement).getPropertyValue('--bg');
-    story.style.padding = "80px 60px";
-    story.style.boxSizing = "border-box";
-    story.style.display = "flex";
-    story.style.flexDirection = "column";
-    story.style.gap = "10px";
-    story.style.position = "absolute";
-    story.style.left = "-9999px";
-    story.style.top = "0";
-
-    // HEADER
-    const header = document.createElement("div");
-    header.innerHTML = `
-      <div style="font-size:50px; font-weight:800; color:var(--accent); margin-bottom:5px;">
-        ${monthName} ${year}
-      </div>
-      <div style="font-size:36px; color:var(--muted); margin-bottom:5px;">
-        Leituras do mês
-      </div>
-    `;
-    story.appendChild(header);
-
-    // -------- ESTATÍSTICAS --------
-    const totalBooks = filteredData.length;
-    const ratings = filteredData.map(b => Number(b.RATING) || 0).filter(r => r > 0);
-    const avgRating = ratings.length ? (ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(2) : 0;
-    const favorites = filteredData.filter(b => (b.FAV||"").toUpperCase() === "YES").length;
-    const rating5 = filteredData.filter(b => Number(b.RATING) === 5).length;
-    const kindle = filteredData.filter(b => (b.FORMAT||"").toUpperCase() === "K").length;
-    const fisico = filteredData.filter(b => (b.FORMAT||"").toUpperCase() === "F").length;
-    const pt = filteredData.filter(b => (b.LANGUAGE||"").toUpperCase() === "PT").length;
-    const inl = filteredData.filter(b => (b.LANGUAGE||"").toUpperCase() === "IN").length;
-
-const statsWrapper = document.createElement("div");
-statsWrapper.style.display = "flex";
-statsWrapper.style.justifyContent = "center";
-statsWrapper.style.width = "100%";
-
-const statsDiv = document.createElement("div");
-statsDiv.style.display = "grid";
-statsDiv.style.gridTemplateColumns = "repeat(3, 1fr)";
-statsDiv.style.gap = "20px";
-statsDiv.style.padding = "10px";
-statsDiv.style.background = "var(--bg-light)";
-statsDiv.style.borderRadius = "40px";
-statsDiv.style.width = "100%";
-statsDiv.style.maxWidth = "900px";
-statsDiv.style.textAlign = "center";
-statsDiv.style.boxShadow = "0 20px 60px rgba(0,0,0,0.05)";
-
-    const stats = [
-      {label:"Total de livros", value: totalBooks},
-      {label:"Total de páginas", value: filteredData.reduce((sum, b) => sum + (Number(b.PAGES) || 0), 0)},
-      {label:"Nota média", value: avgRating},
-      {label:"Nota 5", value: rating5},
-      {label:"Formato F/K", value: `${fisico} / ${kindle}`},
-      {label:"Idioma PT/IN", value: `${pt} / ${inl}`},
-    ];
-
-    stats.forEach(s => {
-const cardStat = document.createElement("div");
-cardStat.style.display = "flex";
-cardStat.style.flexDirection = "column";
-cardStat.style.alignItems = "center";
-cardStat.style.justifyContent = "center";
-cardStat.style.gap = "10px";
-
-const number = document.createElement("div");
-number.textContent = s.value;
-number.style.fontSize = "42px";
-number.style.fontWeight = "800";
-number.style.color = "var(--accent)";
-number.style.lineHeight = "1";
-
-const label = document.createElement("div");
-label.textContent = s.label;
-label.style.fontSize = "15px";
-label.style.fontWeight = "600";
-label.style.color = "var(--muted)";
-label.style.textTransform = "uppercase";
-
-      cardStat.appendChild(number);
-      cardStat.appendChild(label);
-      statsDiv.appendChild(cardStat);
-    });
-
-statsWrapper.appendChild(statsDiv);
-story.appendChild(statsWrapper);
-
-    // -------- MARCADOR 1/2 --------
-    if (totalPages > 1) {
-      const pageIndicator = document.createElement("div");
-      pageIndicator.textContent = `${page + 1}/${totalPages}`;
-      pageIndicator.style.position = "absolute";
-      pageIndicator.style.top = "40px";
-      pageIndicator.style.right = "60px";
-      pageIndicator.style.fontSize = "20px";
-      pageIndicator.style.fontWeight = "600";
-      pageIndicator.style.color = "var(--muted)";
-      story.appendChild(pageIndicator);
-    }
-
-    // -------- CARDS --------
-    const cardsContainer = document.createElement("div");
-    cardsContainer.style.display = "grid";
-    cardsContainer.style.gridTemplateColumns = "1fr 1fr";
-    cardsContainer.style.gap = "100px";
-
-    const start = page * MAX_CARDS_PER_PAGE;
-    const end = start + MAX_CARDS_PER_PAGE;
-    const pageCards = cards.slice(start, end);
-
-    pageCards.forEach(card => {
-      const clone = card.cloneNode(true);
-      clone.style.transform = "scale(1.4)";
-      clone.style.transformOrigin = "top left";
-      clone.style.width = card.offsetWidth + "px";
-      cardsContainer.appendChild(clone);
-    });
-
-    story.appendChild(cardsContainer);
-    document.body.appendChild(story);
-
-    const canvas = await html2canvas(story, { scale: 2, useCORS: true });
-
-    const link = document.createElement("a");
-    link.download = `${year}_${monthName}_${page+1}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-
-    story.remove();
-  }
-}
-
-async function saveAllMonthsAsStories() {
-
-  const yearSelected = state.year;
-  if (!yearSelected) {
-    alert("Selecione um ano primeiro.");
-    return;
-  }
-
-  const yearBlock = document.querySelector(".year-block");
-  if (!yearBlock) {
-    alert("Ano não encontrado.");
-    return;
-  }
-
-  const months = yearBlock.querySelectorAll(".month-block");
-
-  for (const monthBlock of months) {
-    const monthName = monthBlock.querySelector(".month-title").innerText;
-    await saveMonthAsStory(yearSelected, monthBlock, monthName);
-  }
-}
-
-document.getElementById("saveStories")
-  .addEventListener("click", saveAllMonthsAsStories);
 const mesesOrdem = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const state = { data: [], filtered: [], q:"", year:"", month:"", lang:"", format:"", };
 
@@ -863,27 +703,62 @@ function shortMonth(m){
 // =====================================================
 // CORES FIXAS PARA TAG1 (GÊNERO PRINCIPAL)
 // =====================================================
-const coresTag1 = {
-  "Romance": "#E75480",
-  "Drama": "#9333EA",
-  "Fantasia": "#3B82F6",
-  "Mistério": "#0F172A",
-  "Suspense": "#DC2626",
-  "Terror": "#111827",
-  "SciFi": "#06B6D4",
-  "Distopia": "#475569",
-  "Histórico": "#F59E0B",
-  "Biografia": "#FEF3C7",
-  "Não Ficção": "#6B7280",
-  "Graphic Novel": "#10B981",
-  "Mangá": "#F97316",
-  "Ficção de Cura": "#E9D5FF"
+
+const coresTag1 = coresTag2 = {
+  "Romance": "#e44356",
+  "NSFW": "#740e17",
+  "LGBTQ+": "#ad1457",
+  "Drama": "#da853f",
+
+  "Fantasia": "#5b4db2",
+  "Terror": "#6b3fa0",
+  "Mitologia": "#8e44ad",
+  "Monster": "#5e35b1",
+  "Thriller": "#4a3fb3",
+  "Gore": "#3e0757",
+
+  "Mistério": "#3f51b5",
+  "SciFi": "#0b9eac",
+  "Distopia": "#455a64",
+  "Política": "#3949ab",
+  "Física": "#0277bd",
+
+  "Não Ficção": "#2e7d32",
+  "Ficção de Cura": "#00796b",
+  "Juvenil": "#43a047",
+  "Sociais": "#689f38",
+  "Psicologia": "#2e7d32",
+
+  "Aventura": "#f57c00",
+  "Suspense": "#ef6c00",
+  "Crime": "#558b2f",
+  "Faroeste": "#e65100",
+  "Guerra": "#d84315",
+
+  "Histórico": "#6d4c41",
+  "Ficção Histórica": "#5d4037",
+  "História": "#6d4c41",
+  "Clássico": "#546e7a",
+  "De Época": "#bf360c",
+
+  "Poesia": "#8e24aa",
+  "Contemporâneo": "#b23a48",
+  "Sátira": "#f9a825",
+  "Contos": "#ff8f00",
+
+  "Mangá": "#d81b60",
+  "Graphic Novel": "#5e35b1",
+
+  "Biografia": "#f9a825",
+  "Filosofia": "#512da8",
+  "De Formação": "#00695c"
 };
+
 
 // =====================================================
 // CORES DINÂMICAS PARA TAG2 (SUBGÊNERO)
 // =====================================================
-const coresTag2 = {};
+
 
 function gerarCorDeterministica(texto){
   let hash = 0;
@@ -896,17 +771,19 @@ function gerarCorDeterministica(texto){
 
 function corParaTag2(tag2){
   if(!tag2) return null;
+
+  tag2 = (tag2);
+
   if(!coresTag2[tag2]){
     coresTag2[tag2] = gerarCorDeterministica(tag2);
   }
   return coresTag2[tag2];
 }
-
 function cardHTML(b) {
   const tags = [b.TAG1, b.TAG2, b.TAG3].filter(Boolean);
   const fav = (b.FAV || "").toUpperCase() === "YES";
   const rating = Number(b.RATING) || 0;
- const ratingStars =  "★".repeat(Math.floor(rating)) +
+  const ratingStars =  "★".repeat(Math.floor(rating)) +
   (rating % 1 === 0.5 ? "☆" : "");
 
   const formatIcon = b.FORMAT === "K" ? "K" : b.FORMAT === "F" ? "F" : "";
@@ -914,15 +791,15 @@ function cardHTML(b) {
 
   return `
   <article class="card">
-    <div class="card-icons">
-      ${fav ? `<span class="icon-chip heart" onclick="searchByField('fav','YES')">❤︎</span>` : ``}
-    </div>
-
+    <div class="card-cover">
+    <img src="${b["CAPA"]?.trim()}" alt="${b.TITLE}">
+  </div>
     <div class="card-text">
       <div class="author">${b.SERIES}</div>
       <div class="title">${b.TITLE}</div>
       <div class="author">${b.AUTHOR}</div>
-      <div class="rating">${ratingStars}</div>
+      <div class="rating">${ratingStars} ${fav ? `<span class="icon-chip heart" onclick="searchByField('fav','YES')">❤︎</span>` : ``}
+    </div>
 
       <div class="meta-line">
         ${b.MONTH && b.YEAR 
@@ -1066,7 +943,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.body.className = localStorage.getItem("selectedTheme") || "theme-dark";
 });
 
-["index","flashs","tables","form"].forEach(id=>{
+["index","flashs","tables","story","metrics"].forEach(id=>{
   document.getElementById(id)?.addEventListener("click",()=> location.href = id+".html");
 });
 
@@ -1090,4 +967,3 @@ document.getElementById("clear").addEventListener("click",()=>{
 
 </body>
 </html>
-
